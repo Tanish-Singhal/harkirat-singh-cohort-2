@@ -1,0 +1,64 @@
+ECMAScript
+It is a scripting language specification on which JavaSvript is based.
+It serves as the guidlines or the 'rules' for scripting language design.
+
+
+JavaScript
+It is a scripting language not conforms to the ECMAScript specification.
+
+
+Common Js Browser Engines
+Chrome => V8 (C)
+Firefox => Spider (C + Rust)
+
+
+Node Js
+Some people take the V8 engines out of the browser and added some Backend things on top to create a new runtime.
+It is not a language, It is a runtime
+
+
+Bun
+Node.Js is slow, so some people rewrite the JS runtime for the backend and introduced Bun.
+IT is significantly faster runtime.
+It is written in Zig language.
+
+-----------------------------------------------------------------
+
+HTTP
+It is a protocol by which the Frontend can talk to its Backend.
+
+HTTP Server
+It is the server which exposes the content of that website to the world.
+
+
+This to worry about
+
+HTTP (client side)
+1. Protocol (HTTP / HTTPS)
+2. Address (URL / IP / PORT)
+3. Route
+4. Headers, Body, Query Params
+5. Method
+
+HTTP (server side)
+1. Response Headers
+2. Response Body
+3. Status Code
+
+----------------------
+
+https://chat.openai.com/backend-api/conversation
+
+Protocol - https
+URL - chat.openai.com
+Route - backend-api/conversation
+Header - cookie
+Body - What is 2 + 2
+Method - GET    => to get some data from the server
+         POST   => to put some data on the server
+         PUT    => to edit the data from the server
+         DELETE => to delete the data from the server
+Status Code - 200 => Everything is OK
+              404 => Page/route not found
+              403 => Authentication issues
+              500 => Internal server error
