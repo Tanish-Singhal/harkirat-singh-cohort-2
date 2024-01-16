@@ -1,0 +1,43 @@
+BASIC BASH OR UBUNTU TERMINAL COMMAND
+
+pwd - terminal current location
+
+TODO: Starting of the terminal
+/mnt     => It is the folder in which all the windows files are there
+cd 	     => to change directory
+cd ..    => to move to the previous directory (add space in between)
+
+TODO: Download folder location
+/mnt/c/Users/Tanish Singhal/Downloads
+
+ls 			        => to list all the files and folder in the current directory
+ls -l (small L)     => display the detailed list of the files
+ls -R 		        => it will give the informatio of the subdirectory with each directory
+ls -t 			    => it will arange all the directory and files according to the modification time
+ls -a			    => dispaly all the hidden files
+ls *.txt		    => display all the txt files
+ls ind*		        => display all the files and folder starting with ind
+
+mkdir 		        => to make a new folder
+touch index.js      => to make a new file of any extension
+cat index.txt       => to print the content of the file in the terminal
+
+cat > a.txt         => by this also you can add things in the file
+cat >> a.txt        => to apend txt in the existing file (if you use above comand then it will rewrite the whole file)
+
+TODO: in case you use vin as the primary code editor
+vi a.txt            => to make a file using vim
+press i key         => before writing isnide the file unless the content do not write in the file
+esc :wq!            => to save the file
+esc :q!             => to close the file without saving
+
+mv <file or folder to move> <where to move>     => To move the file or folder
+you can use  cd ../.. to  move the files or folders to previous directories
+
+cp <file to copy> <where to copy>	    => To copy a file
+cp -r <file to copy> <where to copy>	=> To copy a folder (just add -r)
+
+rm <file name>      => delete a file
+rm -r <file name>   => delete a folder
+
+clear               => to clear the terminal
