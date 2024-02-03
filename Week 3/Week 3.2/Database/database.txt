@@ -1,0 +1,16 @@
+SQL Database => MySQL
+No SQL Database => MongoDB
+
+Mongo DB
+Relational Database and Non Relational Database
+
+    Code Side                   Mongo DB Side
+1. Database Setup           Database Formation
+2. Model                    Collection
+3. Schema                   Documents
+
+MongoDb lets you create multiple Database (Facebook, Whatsapp, Instagram)
+In each DB, it lets you create tables (user info, photo info, video info)
+In each table, it lets you dump JSON data
+It is schemaless (you don't have to define a structure of your data, you can dump any kind of data)
+It scales well

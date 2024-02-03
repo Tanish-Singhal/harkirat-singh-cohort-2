@@ -1,0 +1,27 @@
+Cryptography
+when password is stored in a website database, then it directly stored in the website database.
+
+1. Hashing
+2. Encryption
+3. Json web token
+4. Local Storage
+
+TODO: Hashing
+Converting the string (email and password) into some gibberish string, so that it can't be decrypt by the hackers easily
+same string always converted into same gibberish word. You can only convert into gibberish string, no way to reverse it
+
+TODO: Encryption
+Converting the string (email and password) into some gibberish string.
+same string always converted into same gibberish word. You can decrypt it by using the key provided for encryption
+
+TODO: Json web token
+It only convert Json data into 3 very long random string.
+token - when the json data is converted, then anyone can converted that 3 very long string into the json data.
+then that data is then verify by the server of the company.
+
+json data    ==>    jwt.encode with password of the jwt    ==>    3 very long string
+3 very long string    ==>    jwt.verigy with password of jwt    ==>    json data
+
+TODO: Local Storage
+Local storage is a web storage mechanism that allows data to be stored locally in a user's web browser.
+Data stored in local storage persists even after the user closes the browser.
