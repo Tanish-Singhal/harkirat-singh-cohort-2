@@ -1,0 +1,6 @@
+Debouncing
+When you search something on google then sometime the serach bar show search results whenever you type a single letter, and sometimes it shows the search results whenever you complete a word.
+It is because to save the number of request goes to the backend server, whenever you type a single letter
+To counter that situation, we assume if the user don't typed for 100ms then we send that request to the backend server and get the most similar response to the input typed 
+
+If you want whenever you type a single letter then that letter goes to the backend server and then it shows you the most similar result according to the word typed, then you have to add "oninput" function in the input tag in html.
