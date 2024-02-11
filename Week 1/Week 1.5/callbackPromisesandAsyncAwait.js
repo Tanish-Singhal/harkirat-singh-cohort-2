@@ -65,24 +65,25 @@
 
 // FIXME: This is how you can create as asynchronus function of your own which is just a wrapper around the inbuilt function of javascript
 
-// const fs = require("fs");
+const fs = require("fs");
 
-// function putCopyrightToFile(cb) {
-//     fs.readFile("a.txt", "utf-8", function(err, data) {
-//         data = data + " copyright 2024 Tanish Singhal";
-//         fs.writeFile("a.txt", function() {
-//             cb();
-//         });
-//     });
-// }
+function putCopyrightToFile(cb) {
+    fs.readFile("a.txt", "utf-8", function(err, data) {
+        data = data + " copyright 2024 Tanish Singhal";
+        fs.writeFile("a.txt", data, function() {
+            cb();
+        });        
+    });
+}
 
-// putCopyrightToFile(function() {
-//     console.log("copyroght has been put");
-// });
+putCopyrightToFile(function() {
+    console.log("copyright has been put");
+});
 
 // -----------------------------------------------------------------
 
 // TODO: Promises
+// Promise is an object which represent the eventual completion or failure of an asynchronous function.
 // Promises are the syntatical sugar that make this code slightly more readable
 // this is the normal code using callback only
 // function findSum(n) {
@@ -123,7 +124,7 @@
 // // now what is the syntax of Promise
 // const fs = require('fs');
 
-// // myown asynchronous function
+// // my own asynchronous function
 // function tanishFile() {
 //     return new Promise(function(resolve) {
 //         console.log("Inside Promise");
@@ -142,6 +143,50 @@
 // let a = tanishFile();
 // console.log(a);
 // a.then(onDone);
+
+// ------------------------------------------------------------
+
+// FIXME: Q) Why we use Promise?
+
+// api.createOrder(cart, function(orderId) {
+//     api.proceedToPayment(orderId);
+// });
+
+// because in callback function, we just just the next program control to a api which we don't want to give (there is a possibility that the api may get down or have a bug)
+// callback hell and pyramid of doom
+
+
+// const promise = api.createOrder(cart);
+
+// promise.then(function(orderId) {
+//     api.proceedToPayment(orderId);
+// })
+
+// we solve it using promises
+// basically we had a promise object and that object will eventually be filled with the result of the asynchronous operation. and we don't pass a function inside any other function, but what we do is to attach a callback function to that promise object. when the promise is resolved that callback function was automatically be called by the promises.
+
+// ---------------------------------------
+
+// Callback Hell
+// createOrder(cart, function(orderId) {
+//     proceedToPayment(orderId, function(paymentInfo) {
+//         showOrderSummary(paymentInfo, function() {
+//             updateWalletBalance();
+//         });
+//     });
+// });
+
+// same thing using promise
+// createOrder(cart)
+//     .then(function(orderId) {
+//         return proceedToPayment(orderId)
+//     })
+//     .then(function(paymentInfo) {
+//         return showOrderSummary(paymentInfo)
+//     })
+//     .then(function(paymentInfo) {
+//         return updateWalletBalance(paymentInfo)
+//     })
 
 // ------------------------------------------------------------
 
