@@ -9,26 +9,26 @@
 // console.log("");
 
 
-const allUsers = [{
-    firstname: "Sandeep",
-    gender: "male"
-}, {
-    firstname: "Pratyush",
-    gender: "male",
-    metadata: {
-        age: 21,
-        address: "xyz"
-    }
-}, {
-    firstname: "Neelam",
-    gender: "female"
-}];
+// const allUsers = [{
+//     firstname: "Sandeep",
+//     gender: "male"
+// }, {
+//     firstname: "Pratyush",
+//     gender: "male",
+//     metadata: {
+//         age: 18,
+//         address: "xyz"
+//     }
+// }, {
+//     firstname: "Neelam",
+//     gender: "female"
+// }];
 
-for (let i = 0; i < allUsers.length; i++) {
-    if (allUsers[i]["metadata"] && allUsers[i]["metadata"]["age"] == 21) {
-        console.log(allUsers[i]["firstname"]);
-    }
-}
+// for (let i = 0; i < allUsers.length; i++) {
+//     if (allUsers[i]["metadata"]["age"] == 21) {
+//         console.log(allUsers[i]["firstname"]);
+//     }
+// }
 
 
 // console.log("");
@@ -88,22 +88,22 @@ for (let i = 0; i < allUsers.length; i++) {
 // console.log(sumOfSqaure(1, 2));
 // console.log(sumOfCubes(2, 2));
 
-// function square(n) {
-//     return n*n;
-// }
+function square(n) {
+    return n*n;
+}
 
-// function cube(n) {
-//     return n*n*n;
-// }
+function cube(n) {
+    return n*n*n;
+}
 
-// function sumOfSomething(a, b, fn) {
-//     let val1 = fn(a);
-//     let val2 = fn(b);
+function sumOfSomething(a, b, fn) {
+    let val1 = fn(a);
+    let val2 = fn(b);
 
-//     return val1 + val2;
-// }
+    return val1 + val2;
+}
 
-// console.log(sumOfSomething(2, 2, cube));
+console.log(sumOfSomething(2, 2, cube));
 
 
 // function sum(num1, num2, fnToCall) {

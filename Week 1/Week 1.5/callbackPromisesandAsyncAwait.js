@@ -124,7 +124,7 @@ putCopyrightToFile(function() {
 // // now what is the syntax of Promise
 // const fs = require('fs');
 
-// // my own asynchronous function
+// // myown asynchronous function
 // function tanishFile() {
 //     return new Promise(function(resolve) {
 //         console.log("Inside Promise");
@@ -143,50 +143,6 @@ putCopyrightToFile(function() {
 // let a = tanishFile();
 // console.log(a);
 // a.then(onDone);
-
-// ------------------------------------------------------------
-
-// FIXME: Q) Why we use Promise?
-
-// api.createOrder(cart, function(orderId) {
-//     api.proceedToPayment(orderId);
-// });
-
-// because in callback function, we just just the next program control to a api which we don't want to give (there is a possibility that the api may get down or have a bug)
-// callback hell and pyramid of doom
-
-
-// const promise = api.createOrder(cart);
-
-// promise.then(function(orderId) {
-//     api.proceedToPayment(orderId);
-// })
-
-// we solve it using promises
-// basically we had a promise object and that object will eventually be filled with the result of the asynchronous operation. and we don't pass a function inside any other function, but what we do is to attach a callback function to that promise object. when the promise is resolved that callback function was automatically be called by the promises.
-
-// ---------------------------------------
-
-// Callback Hell
-// createOrder(cart, function(orderId) {
-//     proceedToPayment(orderId, function(paymentInfo) {
-//         showOrderSummary(paymentInfo, function() {
-//             updateWalletBalance();
-//         });
-//     });
-// });
-
-// same thing using promise
-// createOrder(cart)
-//     .then(function(orderId) {
-//         return proceedToPayment(orderId)
-//     })
-//     .then(function(paymentInfo) {
-//         return showOrderSummary(paymentInfo)
-//     })
-//     .then(function(paymentInfo) {
-//         return updateWalletBalance(paymentInfo)
-//     })
 
 // ------------------------------------------------------------
 
@@ -244,6 +200,29 @@ putCopyrightToFile(function() {
 // value.then(function() {
 //     console.log("hi there");
 // })
+
+// -----------------------------------------------------------
+
+// Callback Hell
+// createOrder(cart, function(orderId) {
+//     proceedToPayment(orderId, function(paymentInfo) {
+//         showOrderSummary(paymentInfo, function() {
+//             updateWalletBalance();
+//         });
+//     });
+// });
+
+// same thing using promise
+// createOrder(cart)
+//     .then(function(orderId) {
+//         proceedToPayment(orderId)
+//     })
+//     .then(function(paymentInfo) {
+//         showOrderSummary(paymentInfo)
+//     })
+//     .then(function(paymentInfo) {
+//         updateWalletBalance(paymentInfo)
+//     })
 
 // ----------------------------------------------------------------
 
