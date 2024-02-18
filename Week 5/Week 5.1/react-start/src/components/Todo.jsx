@@ -1,9 +1,6 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react'
 
-function App() {
+function Todo() {
   const [todos, setTodos] = useState([{
     title: "Go to gym",
     description: "Go to gym from 7-9",
@@ -53,4 +50,4 @@ function TODO(props) {
   )
 }
 
-export default App
+export default Todo;

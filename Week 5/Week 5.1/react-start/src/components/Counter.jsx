@@ -1,9 +1,6 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react'
 
-function App() {
+function Counter() {
   const [count, setCount] = useState(0);
 
   // function onClickHandler() {
@@ -35,6 +32,4 @@ function CustomButton(props) {
   )
 }
 
-export default App;
-
-// 1 35
+export default Counter;
