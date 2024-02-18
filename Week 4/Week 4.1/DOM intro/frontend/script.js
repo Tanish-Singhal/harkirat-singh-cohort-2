@@ -45,4 +45,4 @@ async function populateDiv() {
     document.getElementById("finalSum").innerHTML = ans;
 }
 
-// to connect my own backend server to the frontend i have to install cors opackage for that (Chatgpt it)
+// to connect my own local backend server to the local frontend server, i have to install cors package for that (Chatgpt it)
