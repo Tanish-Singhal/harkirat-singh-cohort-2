@@ -1,0 +1,29 @@
+TODO: Side effects
+In React, the concept of side effect encpmpasses any operations that reach outside the functioal scope of a React component. These operations can affect other components, interact with the browser, or perform asynchronous data fetching.
+Ex - setTimeout, fetch, setInterval
+Side Effects are the operations that can affect other components or can't be done during rendering, such as data fetching, subscriptions, or manually changing the DOM in React Components.
+
+TODO: Hooks
+FIXME: useState => used to make dynamic variable
+    const [count, setCount] = useState(0);
+
+FIXME: useEffect => allows you to perform side effects in function components.
+    useEffect(() => {
+        // fetch call 
+    }, [])
+    this [] is called "dependency array". If this be empty then the given fetch call should be run once. It takes state variable as input.
+
+FIXME: useMemo => It means remembering some output given an input and not computing it again
+We use useMemo because the useEffect make a extra re-rendering, which useMemo can't. So that's why it is the more optimized approach
+Most of the time you can useEffect in place of useMemo.
+
+FIXME: useCallback => It is used to memoize functions, which can help in optimizing the performance of your application, especially in cases involving child components that rely on reference equality to prevent unnecessary renders.
+
+FIXME: Difference between useMemo and useCallback
+useMemo returns a memoized value and useCallback returns a memoized function
+
+FIXME: Coustom Hooks => By this you can create your own coustom Hooks
+                        Only condition is, the name of the custom hook should be start with a "use" name like useSum, useTanish, etc.
+
+useRef
+useContext
