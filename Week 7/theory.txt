@@ -1,0 +1,35 @@
+Jargons
+
+1. Single page applications - which all react a=view all frontend frameworks where you are dynamically changing the page and not fetching from the backend.
+
+2. Client side bundle - the big bundle that you get on the client that has all your JS code and client side routing. 
+
+3. Client side routing - The code that you write as the application developer to make sure by if the user is on the message page show the messgaes so on and so forth.
+
+  function App() {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Landing />} />
+        </Routes>
+      </BrowserRouter>
+    )
+  }
+
+
+useNavigate => If the website has multiple ages, then this is used to navigate to differnt pages without doing the hard refresh.
+
+Lazy Loading => when we do the hard reload, complete bundle of html, css, js comes with all the code of the other pages also (as we do client-side rendering)
+If a person come only to the landing page (no the dashboard page), then why the client receing the dashboard page html, css, js pages also.
+So lzy loading helps, if the person go to page1 then he receives the code of page1, if he goes to page2 then he receives the code of page2, so on and so fourth.
+
+
+We know that we have to pass the state as down as possible, so that if the state changes, less dom has to be re-rendered.
+
+Prop Drilling => If you make a state variable in a component or in the parent, and if you want to use the compoent way down in the children component. so you pass all the state variable way down to the specific children, so this will become visually unappealing. So this situation is called prop-drilling.
+
+Where use are being define a state variable and where it has been used are really far, you you have to drilled that state variable down in the dom tree as props. So this situation is called prop drilling. That's why we use Context API.
+
+Context API => So passing state as props is a great way if the data was passed to a near by component.
+But if the components are far away or the same component was used by many other component, wouldn't it be nice if we can somehow teleport the data directly from any component to another without using the props.
