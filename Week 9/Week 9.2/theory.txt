@@ -1,0 +1,15 @@
+1. target
+The target option in a tsconfig.json file specifies the ECMAScript target version to which the TypeScript compiler will compile the TypeScript code.
+
+2. rootDir
+Where should the compiler look for .ts files. Good practise is for this to be the src folder
+
+3. outDir
+Where should the compiler look for spit out the .js files.
+
+4. noImplicitAny
+true - complusary to give all the variables and functions types
+false - not compulsary to gove all the variable and function types
+
+5. removeComments
+Weather or not to include comments in the final js file
