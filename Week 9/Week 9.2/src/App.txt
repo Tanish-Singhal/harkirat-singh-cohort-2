@@ -1,0 +1,33 @@
+import './App.css'
+
+export default function App() {
+  return (
+    <>
+        <Todo 
+            title='Go to gym' 
+            description='Go to Dym at 7pm' 
+            isDone={true} 
+        />
+    </>
+  )
+}
+
+interface TodoProp {
+    title: string,
+    description: string,
+    isDone: boolean
+}
+
+function Todo({
+    title,
+    description,
+    isDone 
+}: TodoProp) {
+    return (
+        <>
+            <h1>{title}</h1>
+            <h2>{description}</h2>
+            <h2>{isDone ? 'Yes' : 'No'}</h2>
+        </>
+    )
+}
