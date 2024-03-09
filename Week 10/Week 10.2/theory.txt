@@ -1,0 +1,37 @@
+ORM (Object Relational Mapping)
+ORM let you easily interact with your database without worrying too much about the underlying syntax
+
+
+TODO: Advantages
+1. Simpler Syntax
+2. Syntax is not specific to postgres. The same code can be use for MongoDB, postgresSQL and MySQL also.
+3. Has Type checking like Typescript
+4. As your application grows your schema always updating, it lets you to keep track of all the queries that lead to the current schema 
+
+
+Steps to install prisma :-
+1. Initialize an empty Node.js project  =>  npm init -y
+2. Add dependencies                     =>  npm install prisma typescript ts-node @types/node --save-dev
+3. Initialize typescript                =>  npx tsc --init
+4. Initialize a fresh prisma project    =>  npx prisma init
+
+
+FIXME: you have to put the postgres URL in the schema.prisma file
+Note that: you don't have to hard code the URL as I had done in the file.
+
+Migration in Postgres database is just like the github, which track all the schema changes in migrations folder 
+FIXME: for migration    =>    npx prisma migrate dev --name <give the migration a name>
+
+FIXME: If you want to see your postgres database in the terminal    =>    psql -h <localhost> -d <database> -U <username>
+        then write \dt; to show all the tables in your database
+
+
+TODO: Prisma Client
+after created a prisma file you can generate these clients that you can use in your node.js application
+
+command    =>    npx prisma generate
+after running this command you can write any logic in the index.ts file which you created in the src folder
+
+after writing the logic in index.ts file
+cmd    =>    tsc -b
+             node .\dist\index.js

@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // mongodb or mysql (if you are using it)
+  url      = "postgresql://tanishsinghal510:fjr26HoTYMgx@ep-raspy-heart-46223096.us-east-2.aws.neon.tech/learn?sslmode=require"
+}
+
+model User {
+  id          Int     @id @default(autoincrement())
+  username    String  @unique
+  password    String?
+  firstName   String?
+  lastName    String
+  phoneNumber String?
+}
+
+// if you want to make an optional field then add a "?" in the type of the field
+
+model Todo {
+  id          Int     @id @default(autoincrement())
+  title       String
+  done        Boolean @default(false)
+  description String?
+  user_id     Int
+}
