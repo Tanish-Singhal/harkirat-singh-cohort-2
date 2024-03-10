@@ -1,20 +1,24 @@
 Types of Database
 1. NoSQL Database :- Stores data in a schema-less fashion. Example => MongoDB
-
-2. Graph Database :- Stores data in the form of graph. Specially useful in cases where relationshios need to be stored (social network). Example => neo4j
-
+2. Graph Database :- Stores data in the form of graph. Specially useful in cases where relationships need to be stored (social network). Example => neo4j
 3. Vector Database :- Stores data in the form of vectors. Useful in ML. Example => Pinecone
-
-4. SQL Datbase :- Stores data in the forms of rows. Most full stack applications will use this. Example => MySQL, Postgress
+4. SQL Datbase :- Stores data in the forms of rows. Most full stack applications will use this. Example => MySQL, Postgres
 
 
 Why not NoSQL?
 because it is schemaless, so it is ideal thing to make a project very fast.
 as it is schemaless, so you might by mistake put curroupted data your your mongodb Database
 
-Can lead to inconsistent database
-Can cause runtime errors 
-Is too flexible for an app that needs strictness
+-> Can lead to inconsistent database
+-> Can cause runtime errors 
+-> Is too flexible for an app that needs strictness
+
+
+Why SQL?
+-> Define schema with their Types
+-> Strict schema
+-> update the schema as application grows
+
 
 
 Database URL 
