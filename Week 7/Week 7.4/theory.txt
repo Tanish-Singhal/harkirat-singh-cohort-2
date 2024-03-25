@@ -1,0 +1,6 @@
+TODO: Atom
+for example, the notification count of an icon is the dynamic variable in a website. So how can we store that notification count, inside a state variable or in an Atom.
+
+TODO: Selector
+Sector is something that can be derived from other atoms
+for example: if we want to print the sum of all the notification count in the Me button.
