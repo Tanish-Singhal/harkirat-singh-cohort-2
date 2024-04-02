@@ -25,5 +25,5 @@ useMemo returns a memoized value and useCallback returns a memoized function
 FIXME: Coustom Hooks => By this you can create your own coustom Hooks
                         Only condition is, the name of the custom hook should be start with a "use" name like useSum, useTanish, etc.
 
-useRef => hook in react
-useContext => hook in react
+useRef
+useContext

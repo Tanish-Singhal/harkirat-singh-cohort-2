@@ -63,20 +63,20 @@
 // }, 1000)
 
 
-function promisifiedMyOwnSetTimeout(duration) {
-    const p = new Promise(function(resolve) {
-        setTimeout(function() {
-            resolve();
-        }, duration);
-    });
-    return p;
-}
+// function promisifiedMyOwnSetTimeout(duration) {
+//     const p = new Promise(function(resolve) {
+//         setTimeout(function() {
+//             resolve();
+//         }, duration);
+//     });
+//     return p;
+// }
 
-const ans = promisifiedMyOwnSetTimeout(1000);
-console.log(ans);
-ans.then(function() {
-    console.log("timeout is done");
-});
+// const ans = promisifiedMyOwnSetTimeout(1000);
+// console.log(ans);
+// ans.then(function() {
+//     console.log("timeout is done");
+// });
 
 // -----------------------------------------------------------------
 
@@ -95,3 +95,6 @@ ans.then(function() {
 // }
 
 // main();
+
+// -----------------------------------------------------------------
+

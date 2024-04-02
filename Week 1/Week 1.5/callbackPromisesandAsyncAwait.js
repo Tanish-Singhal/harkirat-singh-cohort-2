@@ -65,20 +65,20 @@
 
 // FIXME: This is how you can create as asynchronus function of your own which is just a wrapper around the inbuilt function of javascript
 
-const fs = require("fs");
+// const fs = require("fs");
 
-function putCopyrightToFile(cb) {
-    fs.readFile("a.txt", "utf-8", function(err, data) {
-        data = data + " copyright 2024 Tanish Singhal";
-        fs.writeFile("a.txt", data, function() {
-            cb();
-        });        
-    });
-}
+// function putCopyrightToFile(cb) {
+//     fs.readFile("a.txt", "utf-8", function(err, data) {
+//         data = data + " copyright 2024 Tanish Singhal";
+//         fs.writeFile("a.txt", data, function() {
+//             cb();
+//         });        
+//     });
+// }
 
-putCopyrightToFile(function() {
-    console.log("copyright has been put");
-});
+// putCopyrightToFile(function() {
+//     console.log("copyright has been put");
+// });
 
 // -----------------------------------------------------------------
 
@@ -270,3 +270,4 @@ putCopyrightToFile(function() {
 // main();
 
 // -----------------------------------------------------------------
+

@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const app = express();
-const port = process.env.PORT || 3000;      // by this we can start the process to different Port numbers
+const port = process.env.PORT || 3000;      // by this we can start the process to difaxrent Port numbers
 // to set different port number just write "$env:PORT = 3005" in terminal
 
 // middlewares
