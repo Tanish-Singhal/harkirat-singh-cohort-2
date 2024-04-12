@@ -12,12 +12,14 @@ const users =[{
 app.get("/", function(req, res) {
     const johnKidney = users[0].kidneys;
     const numberOfKidneys = johnKidney.length;
-    let numberOfHealthyKidneys = 0;
-    for (let i = 0; i < johnKidney.length; i++) {
-        if (johnKidney[i].healthy) {
-            numberOfHealthyKidneys = numberOfHealthyKidneys + 1;
-        }
-    }     
+    // let numberOfHealthyKidneys = 0;
+    // for (let i = 0; i < johnKidney.length; i++) {
+    //     if (johnKidney[i].healthy) {
+    //         numberOfHealthyKidneys = numberOfHealthyKidneys + 1;
+    //     }
+    // }     
+    const numberOfHealthyKidneys = johnKidney.filter(kidney => kidney.healthy).length;
+
     const numberOfUnhealthyKidneys = numberOfKidneys - numberOfHealthyKidneys;
     
     res.json({
@@ -41,30 +43,50 @@ app.post("/", function(req, res) {
     })
 });
 
-// TODO: we have to update all kidney to healthy
+// // TODO: we have to update all kidney to healthy
 app.put("/", function(req, res) {
     for (let i = 0; i < users[0].kidneys.length; i++) {
         users[0].kidneys[i].healthy = true;
     }
 
-    res.json({});
-});
-
-// TODO: we have to remove all the unHealthy kidneys
-app.delete("/", function(Req, res) {
-    const newKidneys = [];
-    for (let i = 0; i < users[0].kidneys.length; i++) {
-        if (users[0].kidneys[i].healthy) {
-            newKidneys.push({
-                healthy: true
-            })
-        }
-    }
-    users[0].kidneys = newKidneys;
-
     res.json({
         msg: "DONE"
-    })
+    });
+});
+
+// // TODO: we have to remove all the unHealthy kidneys
+app.delete("/", function(req, res) {
+    if (isThereAtleastOneUnhealthyKidney) {             // check for unhealthy kidney
+        const newKidneys = [];
+        for (let i = 0; i < users[0].kidneys.length; i++) {
+            if (users[0].kidneys[i].healthy) {
+                newKidneys.push({
+                    healthy: true
+                })
+            }
+        }
+        users[0].kidneys = newKidneys;
+
+        res.json({
+            msg: "DONE"
+        })
+    }
+    else {
+        res.status(411).json({
+            msg: "You have no bad kidneys"
+        })
+    }
 })
+
+// only if atleast one unhealthy keidney is there then do this, else return 411
+function isThereAtleastOneUnhealthyKidney() {
+    let atleastOneUnhealthyKidney = false;
+    for (let i = 0; i < users[0].kidneys.length; i++) {
+        if (!users[0].kidneys[i].healthy) {
+            atleastOneUnhealthyKidney = true;
+        }
+    }
+    return atleastOneUnhealthyKidney;
+}
 
 app.listen(3000);
