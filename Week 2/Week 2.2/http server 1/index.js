@@ -6,7 +6,7 @@ const port = process.env.PORT || 3000;      // by this we can start the process 
 // to set different port number just write "$env:PORT = 3005" in terminal
 
 // middlewares
-app.use(bodyParser.json());
+app.use(express.json());
 
 // create a todo app that lets users store todos on the server
 app.get('/', function(req, res) {
@@ -26,7 +26,7 @@ app.post("/html", function(req, res) {
 });
 
 app.post("/conversations", function(req, res) {
-    console.log(req.headers["authorization"])
+    console.log(req.headers.authorization)
     res.send({
         msg: "2 + 2 = 4"
     })

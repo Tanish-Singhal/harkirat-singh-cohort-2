@@ -21,18 +21,18 @@ app.get("/kidney-checkup", function(req, res) {
         res.status(400).json({
             msg: "Sonething up with your inputs"
         })
-        return
+        return;
     }
 
     if (kidneyId != 1 && kidneyId != 2) {
         res.status(400).json({
-            msg: "Sonething up with your inputs"
+            msg: "Something up with your inputs"
         })
-        return
+        return;
     }
 
-    // d o something with kidneys here
-    res.json({
+    // do something with kidneys here
+    res.status(200).json({
         msg: "Your kidneys are fine!"
     })  
 });
@@ -40,6 +40,7 @@ app.get("/kidney-checkup", function(req, res) {
 app.post("/health-checkup", function(req, res) {
     let bodyContent = req.body.msg;
     console.log(bodyContent);
+    res.json({})
 })
 
 app.listen(3000);

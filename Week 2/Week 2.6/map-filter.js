@@ -38,3 +38,13 @@ function filterLogic(n) {
 
 const output = arr.filter(filterLogic);
 console.log(output);
+
+// -----------------------------------------------------------------
+
+// FIXME: Suppose you have to filter some number and then double the rest of the number
+
+let array = [1, 2, 3, 4, 5, 6, 7, 8];
+
+let filterArr = array.filter(a => a % 2 == 0);
+let mapArr = filterArr.map(a => a * 2);
+console.log(mapArr);

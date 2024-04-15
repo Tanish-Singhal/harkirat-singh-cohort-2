@@ -5,19 +5,20 @@ const express= require("express");
 const zod = require("zod");
 const app = express();
 
-const schema = zod.array(zod.number());
+const schema = zod.array(zod.number()).length(2);
 
 app.use(express.json());
 
 app.post("/health-checkup", function(req, res) {
     // kidneys = [1, 2]
-    const kidneys = req.body.kidneys;
+    const kidneys = req.body["kidneys"];
 
     // const kidneyLength = kidneys.length;
     // res.send("you have " + kidneyLength + " kidneys");
 
     const response = schema.safeParse(kidneys)
-    if (!response.sucess) {
+    console.log(response);
+    if (!response.success) {
         res.status(411).json({
             msg: "input is invalid"
         })
@@ -33,9 +34,7 @@ app.post("/health-checkup", function(req, res) {
 // these help you give the user a better error message
 // These are the special type of middlewares that has 4 arguments.
 app.use(function(err, req, res, next) {  
-    res.json({
-        msg: "Sorry something is up with your inputs"
-    })
+    res.status(500).send("Sorry something is up with your inputs")
 })
 
 // TODO: ZOD

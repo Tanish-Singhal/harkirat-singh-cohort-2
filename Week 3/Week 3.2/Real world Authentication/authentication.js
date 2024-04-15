@@ -48,7 +48,7 @@ function userExists(username, password) {
   let userExists = false;
   for (let i = 0; i < ALL_USERS.length; i++) {
     if (username === ALL_USERS[i].username && password === ALL_USERS[i].password) {
-        userExists = true;
+      userExists = true;
     }
   }
   return userExists;
@@ -64,9 +64,12 @@ app.post("/signin", function (req, res) {
     });
   }
 
-  var token = jwt.sign({ username: username }, jwtPassword);
+  let token = jwt.sign({ 
+    username: username
+  }, jwtPassword);
+
   return res.json({
-    token,
+    token: token,
   });
 });
 

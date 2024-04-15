@@ -14,3 +14,17 @@ In each DB, it lets you create tables (user info, photo info, video info)
 In each table, it lets you dump JSON data
 It is schemaless (you don't have to define a structure of your data, you can dump any kind of data)
 It scales well
+
+
+
+Database Jargons
+1. Cluster
+2. Database
+3. Table / Collection
+
+
+when you have the connection URL, and when you connect to it using the mongodb compass
+
+1. The first interface you saw is the "CLUSTER" of that URL
+2. The things you made on the left of the comapss is the "DATABASE"
+3. Tehe further things you create inside the folder are called "COLLECTIONS/TABLE"
