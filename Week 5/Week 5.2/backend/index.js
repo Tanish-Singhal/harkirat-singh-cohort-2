@@ -6,7 +6,9 @@ const cors = require("cors");
 const port = 3000
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173"
+}));
 
 // body {
 //   title: String
@@ -15,6 +17,7 @@ app.use(cors());
 app.post('/todo', async function (req, res) {
   const createPayload = req.body;
   const parsedPayload = createTodo.safeParse(createPayload);
+  console.log(parsedPayload)
   if (!parsedPayload.success) {
     res.status(411).json({
       msg: "You sent the wrong input",
