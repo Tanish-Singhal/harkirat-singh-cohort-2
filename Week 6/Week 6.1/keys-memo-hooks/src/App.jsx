@@ -1,20 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React, { useEffect } from "react";
 import './App.css'
-// import ReactKeys from './components/ReactKeys'
-// import ReactMemo from './components/ReactMemo'
-import UseEffect from './components/UseEffect'
+import ReactMemo from "./components/ReactMemo";
+import ReactKeys from "./components/ReactKeys"
+import CardWrapper from "./components/CardWrapper";
+import TextComponent from "./components/TextComponent";
+import UseEffect from "./components/UseEffect"
 
 
 function App() {
   return (
-    <>
-      {/* <ReactKeys /> */}
+    <div>
       {/* <ReactMemo /> */}
+      {/* <ReactKeys /> */}
+
+      {/* <CardWrapper children={<TextComponent />} /> */}
+      {/* That's how we can pass a component inside a component */}
+
       <UseEffect />
-    </>
+    </div>
   )
 }
 
-export default App
+export default App;

@@ -31,7 +31,9 @@ function ReactKeys() {
       {todos.map(function (todo) {
         return <Todo key={todo.id} title={todo.title} description={todo.description} />
       })}
+      
       {/* Whenever the React is trying to do some operation on the divs, then it will be difficult for React to understand what element or div has to change */}
+      {/* so it is important to add keys in the divs, it will help react to monitor in which div react has to perform the operations */}
     </>
   )
 }
