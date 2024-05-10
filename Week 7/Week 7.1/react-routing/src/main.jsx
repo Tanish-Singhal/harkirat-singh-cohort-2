@@ -4,11 +4,10 @@ import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from './Layout.jsx';
-import Navbar from './components/Navbar.jsx';
-import Footer from './components/Footer.jsx';
 import Landing from './components/Landing.jsx';
 import About from './components/About.jsx';
 import Dashboard from './components/Dashboard.jsx';
+import User from './components/User.jsx';
 
 const router = createBrowserRouter(
   [
@@ -27,6 +26,10 @@ const router = createBrowserRouter(
         {
           path: "/dashboard",
           element: <Dashboard />
+        },
+        {
+          path: "user/:userId",
+          element: <User />
         }
       ]
     }
