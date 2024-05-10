@@ -1,37 +1,45 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
     <div className="fixed flex flex-wrap justify-center items-center top-6 inset-x-0 px-2">
       <nav className="flex flex-wrap justify-center gap-3 shadow-lg bg-white px-3 py-2 rounded-3xl">
-        <Link
+        <NavLink
           to="/"
-          className="font-semibold outline-none px-4 py-1 rounded-full text-black"
+          className={({ isActive }) =>`${isActive ? "bg-indigo-500 text-white" : ""}
+           font-semibold outline-none px-4 py-1 rounded-full text-black`
+          }
         >
           Home
-        </Link>
-
-        <Link
+        </NavLink>
+        
+        <NavLink
           to="/about"
-          className="font-semibold outline-none px-4 py-1 rounded-full text-black"
+          className={({ isActive }) =>`${isActive ? "bg-indigo-500 text-white" : ""}
+           font-semibold outline-none px-4 py-1 rounded-full text-black`
+          }
         >
           About
-        </Link>
-
-        <Link
+        </NavLink>
+        
+        <NavLink
           to="/dashboard"
-          className="font-semibold outline-none px-4 py-1 rounded-full text-black"
+          className={({ isActive }) =>`${isActive ? "bg-indigo-500 text-white" : ""}
+           font-semibold outline-none px-4 py-1 rounded-full text-black`
+          }
         >
           Dashboard
-        </Link>
-
-        <Link
+        </NavLink>
+        
+        <NavLink
           to="/user"
-          className="font-semibold outline-none px-4 py-1 rounded-full text-black"
+          className={({ isActive }) =>`${isActive ? "bg-indigo-500 text-white" : ""}
+           font-semibold outline-none px-4 py-1 rounded-full text-black`
+          }
         >
           User
-        </Link>
+        </NavLink>
       </nav>
     </div>
   );
