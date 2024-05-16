@@ -22,6 +22,8 @@ export const notificationAtom = atom({
 
 
 // selector
+// a selector is something that can be derived from other atoms, without making another atoms
+
 export const totalNotificationSelector = selector({
   key: "totalNotificationSelector",
   get: ({get}) => {
