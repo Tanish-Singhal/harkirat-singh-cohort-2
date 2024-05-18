@@ -1,60 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { CountContext } from './context';
-import { useContext } from 'react';
+import "./App.css";
+import { useContext, useState } from "react";
+import { CountContext } from "./context";
 
-function App() {
+export default function App() {
   const [count, setCount] = useState(0);
+  // to use the context api file value, you have to wrap those component which will need to use that value
 
-  // wrap anyone that wants to use the teleported value inside a provider
   return (
     <>
-    {/* <Count count={count} setCount={setCount} /> */}
-    {/* <Button count={count} setCount={setCount} /> */}
-
-    <CountContext.Provider value={count}>
-      <Count setCount={setCount} />
-    </CountContext.Provider>
+      <h1>Hello World</h1>
+      <CountContext.Provider value={{count, setCount}}>
+        <Count />
+      </CountContext.Provider>
     </>
-  )
+  );
 }
 
-function Count({setCount}) {
+function Count() {
   console.log("re-render");
+
   return (
     <>
       <CountRender />
-      <Button setCount={setCount} />
+      <Button />
     </>
-  )
+  );
 }
 
 function CountRender() {
-  const count = useContext(CountContext);
+  const { count } = useContext(CountContext);
 
   return (
     <>
-      {count}
+      <h1>{count}</h1>
     </>
-  )
+  );
 }
 
-function Button({setCount}){
-  const count = useContext(CountContext);
+function Button() {
+  const { count, setCount } = useContext(CountContext);
 
   return (
     <>
-      <button onClick={() => {
-        setCount(count + 1);
-      }}>Increase</button>
-
-      <button onClick={() => {
-        setCount(count - 1);
-      }}>Decrease</button>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+      <button onClick={() => setCount(count - 1)}>Decrease</button>
     </>
-  )
+  );
 }
-
-export default App
