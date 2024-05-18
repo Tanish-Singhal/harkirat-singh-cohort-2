@@ -1,8 +1,8 @@
 import { atom, selector } from "recoil";
 
 export const countAtom = atom({
-  key: "countAtom",
-  default: 0
+  key: "countAtom",   // unique ID (with respect to other atoms/selectors)
+  default: 0          // default value (initial value)
 });
 
 // TODO: key should be unique
