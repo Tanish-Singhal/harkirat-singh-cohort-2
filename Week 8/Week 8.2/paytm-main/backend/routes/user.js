@@ -6,6 +6,7 @@ const JWT_SECRET = require("../config");
 
 const router = express.Router();
 
+// Sign-up Route
 const signupBody = zod.object({
   username: zod.string().email(),
   password: zod.string().min(8),
@@ -32,13 +33,18 @@ router.post("/signup", async (req, res) => {
     });
   }
 
+  // hash password using bcrypt
+  const salt = await bcrypt.gensalt(10);
+  const secPassword = await bcrypt.hash(req.body.password, salt);
+
   const user = await User.create({
     username: req.body.username,
-    password: req.body.password,
+    password: secPassword,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
   });
 
+  // generates the token
   const token = jwt.sign({
     userId: user._id,
   }, JWT_SECRET);
@@ -49,6 +55,7 @@ router.post("/signup", async (req, res) => {
   });
 });
 
+// Sign-in Route
 const signinBody = zod.object({
   username: zod.string().email(),
   password: zod.string(),
