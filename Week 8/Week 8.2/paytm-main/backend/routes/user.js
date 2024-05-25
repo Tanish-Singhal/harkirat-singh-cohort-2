@@ -1,6 +1,7 @@
 const express = require("express");
 const zod = require("zod");
 const { User } = require("../db");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = require("../config");
 
@@ -34,12 +35,12 @@ router.post("/signup", async (req, res) => {
   }
 
   // hash password using bcrypt
-  const salt = await bcrypt.gensalt(10);
-  const secPassword = await bcrypt.hash(req.body.password, salt);
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(req.body.password, salt);
 
   const user = await User.create({
     username: req.body.username,
-    password: secPassword,
+    password: hashPassword,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
   });
@@ -69,12 +70,13 @@ router.post("/signin", async (req, res) => {
     });
   }
 
+  // checking the username and the hash password in the database
   const user = await User.findOne({
     username: req.body.username,
-    password: req.body.password,
   });
+  // const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
 
-  if (user) {
+  if (user && await bcrypt.compare(req.body.password, user.password)) {
     const token = jwt.sign({
       userId: user._id,
     }, JWT_SECRET);
