@@ -4,6 +4,7 @@ const { User } = require("../db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = require("../config");
+const { authMiddleware } = require("../middleware");
 
 const router = express.Router();
 
@@ -76,7 +77,7 @@ router.post("/signin", async (req, res) => {
   });
   // const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
 
-  if (user && await bcrypt.compare(req.body.password, user.password)) {
+  if (user && (await bcrypt.compare(req.body.password, user.password))) {
     const token = jwt.sign({
       userId: user._id,
     }, JWT_SECRET);
@@ -89,6 +90,30 @@ router.post("/signin", async (req, res) => {
 
   res.status(411).json({
     message: "Error while logging in",
+  });
+});
+
+// Route for updating the information of the user
+const updateBody = zod.object({
+  password: zod.string().optional(),
+  firstName: zod.string().optional(),
+  lastName: zod.string().optional(),
+});
+
+router.put("/", authMiddleware, async (req, res) => {
+  const { success } = updateBody.safeParse(req.body);
+  if (!success) {
+    res.status(411).json({
+      message: "Error while updating information",
+    });
+  }
+
+  await User.updateOne(req.body, {
+    id: req.userId,
+  });
+
+  res.json({
+    message: "Updated successfully",
   });
 });
 
