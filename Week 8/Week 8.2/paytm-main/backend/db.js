@@ -29,9 +29,26 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// create a model from the user
+// TODO: usually in the payment application, you shouldn't store the account balance in decimal (33.37 => 3333)
+// and put the decimal after two digits in the frontend part
+// this is because of the precision errors in javascripts and database
+const accountSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,   // Reference to User model, to prevent database to show balance to the user who doesn't even have an account in my application
+    ref: 'User',
+    required: true,
+  },
+  balance: {
+    type: Number,
+    required: true,
+  }
+})
+
+// create a model from the user and account
 const User = mongoose.model("User", userSchema);
+const Account = mongoose.model("Account", accountSchema)
 
 module.exports = {
   User,
+  Account,
 };
