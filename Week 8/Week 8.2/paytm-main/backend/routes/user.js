@@ -4,7 +4,7 @@ const { User } = require("../db");
 const { Account } = require("../db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = require("../config");
+const { JWT_SECRET } = require("../config");
 const { authMiddleware } = require("../middleware");
 
 const router = express.Router();
@@ -48,9 +48,9 @@ router.post("/signup", async (req, res) => {
   });
 
   await Account.create({
-    userId: userId,
-    balance: 1 + Math.random()*10000,       // This was done because, currently we don't know how to integrate our application with real banks
-  })
+    userId: user._id,
+    balance: 1 + Math.random() * 10000,
+  });  
 
   // generates the token
   const token = jwt.sign({
@@ -71,6 +71,7 @@ const signinBody = zod.object({
 
 router.post("/signin", async (req, res) => {
   const { success } = signinBody.safeParse(req.body);
+
   if (!success) {
     return res.status(411).json({
       message: "Incorrect inputs",
@@ -78,14 +79,14 @@ router.post("/signin", async (req, res) => {
   }
 
   // checking the username and the hash password in the database
-  const user = await User.findOne({
+  const isUser = await User.findOne({
     username: req.body.username,
   });
-  // const isPasswordValid = await bcrypt.compare(req.body.password, user.password);
+  const isPasswordValid = await bcrypt.compare(req.body.password, isUser.password);
 
-  if (user && (await bcrypt.compare(req.body.password, user.password))) {
+  if (isUser && isPasswordValid) {
     const token = jwt.sign({
-      userId: user._id,
+      userId: isUser._id,
     }, JWT_SECRET);
 
     res.json({
@@ -101,22 +102,31 @@ router.post("/signin", async (req, res) => {
 
 // Route for updating the information of the user
 const updateBody = zod.object({
-  password: zod.string().optional(),
+  password: zod.string().min(8).optional(),
   firstName: zod.string().optional(),
   lastName: zod.string().optional(),
 });
 
 router.put("/", authMiddleware, async (req, res) => {
-  const { success } = updateBody.safeParse(req.body);
+  const { success, data } = updateBody.safeParse(req.body);
+
   if (!success) {
     res.status(411).json({
       message: "Error while updating information",
     });
   }
 
-  await User.updateOne(req.body, {
-    id: req.userId,
-  });
+  // hash the updated password
+  if (data.password) {
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(data.password, salt);
+    data.password = hashPassword; 
+  }
+
+  await User.updateOne(
+    { _id: req.userId },
+    { $set: data }
+  );
 
   res.json({
     message: "Updated successfully",
