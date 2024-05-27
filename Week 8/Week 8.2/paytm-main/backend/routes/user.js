@@ -1,6 +1,7 @@
 const express = require("express");
 const zod = require("zod");
 const { User } = require("../db");
+const { Account } = require("../db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = require("../config");
@@ -45,6 +46,11 @@ router.post("/signup", async (req, res) => {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
   });
+
+  await Account.create({
+    userId: userId,
+    balance: 1 + Math.random()*10000,       // This was done because, currently we don't know how to integrate our application with real banks
+  })
 
   // generates the token
   const token = jwt.sign({
