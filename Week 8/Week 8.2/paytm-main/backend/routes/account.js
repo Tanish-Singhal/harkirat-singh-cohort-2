@@ -1,6 +1,7 @@
 const express = require("express");
 const { authMiddleware } = require("../middleware");
 const { Account } = require("../db");
+const zod = require("zod");
 
 const router = express.Router();
 
@@ -22,20 +23,21 @@ router.get("/balance", authMiddleware, async (req, res) => {
   }
 });
 
+const transferSchema = zod.object({
+  amount: zod.number().positive(),
+  to: zod.string(),
+});
+
 router.post("/transfer", authMiddleware, async (req, res) => {
-  const { amount, to } = req.body;
+  const { success, data } = transferSchema.safeParse(req.body);
 
-  if (!amount || !to) {
+  if (!success) {
     return res.status(400).json({
-      message: "Amount and recipient are required",
+      message: "Both the fields are required with positive amount",
     });
   }
 
-  if (amount <= 0) {
-    return res.status(400).json({
-      message: "Transfer amount must be positive",
-    });
-  }
+  const { amount, to } = data;
 
   try {
     const fromAccount = await Account.findOne({
