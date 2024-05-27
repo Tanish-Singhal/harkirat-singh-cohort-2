@@ -5,13 +5,21 @@ const { Account } = require("../db");
 const router = express.Router();
 
 router.get("/balance", authMiddleware, async (req, res) => {
-  const account = await Account.findOne({
-    userId: req.userId,
-  });
+  try {
+    const account = await Account.findOne({
+      userId: req.userId,
+    });
+  
+    res.json({
+      balance: account.balance,
+    });
 
-  res.json({
-    balance: account.balance,
-  });
+  } catch(error) {
+    res.status(500).json({
+      message: "Error while fetching the balance",
+      error: error.message,
+    })
+  }
 });
 
 router.post("/transfer", authMiddleware, async (req, res) => {
@@ -77,7 +85,7 @@ router.post("/transfer", authMiddleware, async (req, res) => {
       res.status(200).json({
         message: "Funds transfer successful",
       });
-      
+
     } catch (error) {
       res.status(500).json({
         message: "Funds transfer failed!",

@@ -22,7 +22,7 @@ router.post("/signup", async (req, res) => {
 
   if (!success) {
     return res.status(411).json({
-      message: "Email already taken / Incorrect inputs",
+      message: "Incorrect inputs",
     });
   }
 
@@ -32,7 +32,7 @@ router.post("/signup", async (req, res) => {
 
   if (existingUser) {
     return res.status(411).json({
-      message: "Email already taken/Incorrect inputs",
+      message: "Email already taken",
     });
   }
 
@@ -40,27 +40,36 @@ router.post("/signup", async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(req.body.password, salt);
 
-  const user = await User.create({
-    username: req.body.username,
-    password: hashPassword,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-  });
+  try {
+    const user = await User.create({
+      username: req.body.username,
+      password: hashPassword,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+    });
+  
+    // we done this because, we currently don't knwo how to connect our application using banks server
+    await Account.create({
+      userId: user._id,
+      balance: 1 + Math.random() * 10000,
+    });  
+  
+    // generates the token
+    const token = jwt.sign({
+      userId: user._id,
+    }, JWT_SECRET);
+  
+    res.json({
+      message: "User created successfully",
+      token: token,
+    });
 
-  await Account.create({
-    userId: user._id,
-    balance: 1 + Math.random() * 10000,
-  });  
-
-  // generates the token
-  const token = jwt.sign({
-    userId: user._id,
-  }, JWT_SECRET);
-
-  res.json({
-    message: "User created successfully",
-    token: token,
-  });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error occured while creating the account",
+      error: error.message,
+    })
+  }
 });
 
 // Sign-in Route
@@ -79,25 +88,33 @@ router.post("/signin", async (req, res) => {
   }
 
   // checking the username and the hash password in the database
-  const isUser = await User.findOne({
-    username: req.body.username,
-  });
-  const isPasswordValid = await bcrypt.compare(req.body.password, isUser.password);
-
-  if (isUser && isPasswordValid) {
-    const token = jwt.sign({
-      userId: isUser._id,
-    }, JWT_SECRET);
-
-    res.json({
-      token: token,
+  try {
+    const isUser = await User.findOne({
+      username: req.body.username,
     });
-    return;
-  }
+    const isPasswordValid = await bcrypt.compare(req.body.password, isUser.password);
+  
+    if (isUser && isPasswordValid) {
+      const token = jwt.sign({
+        userId: isUser._id,
+      }, JWT_SECRET);
+  
+      res.json({
+        token: token,
+      });
+      return;
+    }
+  
+    res.status(411).json({
+      message: "Error while logging in",
+    });
 
-  res.status(411).json({
-    message: "Error while logging in",
-  });
+  } catch(error) {
+    res.status(500).json({
+      message: "Error while logging you",
+      error: error.message,
+    })
+  }
 });
 
 // Route for updating the information of the user
@@ -123,14 +140,22 @@ router.put("/", authMiddleware, async (req, res) => {
     data.password = hashPassword; 
   }
 
-  await User.updateOne(
-    { _id: req.userId },
-    { $set: data }
-  );
+  try {
+    await User.updateOne(
+      { _id: req.userId },
+      { $set: data }
+    );
+  
+    res.json({
+      message: "Updated successfully",
+    });
 
-  res.json({
-    message: "Updated successfully",
-  });
+  } catch (error) {
+    res.status(500).json({
+      message: "An error occurred while updating the details",
+      error: error.message,
+    })
+  }
 });
 
 
@@ -138,26 +163,34 @@ router.put("/", authMiddleware, async (req, res) => {
 router.get("/bulk", async (req, res) => {
   const filter = req.query.filter || "";
 
-  const users = await User.find({
-    $or: [{
-      firstName: {
-        "$regex": filter
-      }
-    }, {
-      lastName: {
-        "$regex": filter
-      }
-    }]
-  })
+  try {
+    const users = await User.find({
+      $or: [{
+        firstName: {
+          "$regex": filter
+        }
+      }, {
+        lastName: {
+          "$regex": filter
+        }
+      }]
+    })
+  
+    res.json({
+      user: users.map(user => ({
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        _id: user._id
+      }))
+    })
 
-  res.json({
-    user: users.map(user => ({
-      username: user.username,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      _id: user._id
-    }))
-  })
+  } catch(error) {
+    res.status(500).json({
+      message: "Error occured fetching the user",
+      error: error.message,
+    })
+  }
 })
 
 module.exports = router;
