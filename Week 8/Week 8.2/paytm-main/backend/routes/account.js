@@ -2,6 +2,7 @@ const express = require("express");
 const { authMiddleware } = require("../middleware");
 const { Account } = require("../db");
 const zod = require("zod");
+const mongoose = require("mongoose");
 
 const router = express.Router();
 
@@ -29,6 +30,9 @@ const transferSchema = zod.object({
 });
 
 router.post("/transfer", authMiddleware, async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   const { success, data } = transferSchema.safeParse(req.body);
 
   if (!success) {
@@ -42,9 +46,12 @@ router.post("/transfer", authMiddleware, async (req, res) => {
   try {
     const fromAccount = await Account.findOne({
       userId: req.userId,
-    });
+    }).session(session);
 
     if (fromAccount.balance < amount) {
+      await session.abortTransaction();
+      session.endSession();
+  
       return res.status(400).json({
         message: "Insufficient Balance",
       });
@@ -52,9 +59,12 @@ router.post("/transfer", authMiddleware, async (req, res) => {
 
     const toAccount = await Account.findOne({
       userId: to,
-    });
+    }).session(session);
 
     if (!toAccount) {
+      await session.abortTransaction();
+      session.endSession();
+
       return res.status(400).json({
         message: "Invalid Account",
       });
@@ -71,7 +81,7 @@ router.post("/transfer", authMiddleware, async (req, res) => {
             balance: -amount,
           },
         }
-      );
+      ).session(session);
 
       await Account.updateOne(
         {
@@ -82,23 +92,36 @@ router.post("/transfer", authMiddleware, async (req, res) => {
             balance: amount,
           },
         }
-      );
+      ).session(session);
+
+      await session.commitTransaction();
+      session.endSession();
 
       res.status(200).json({
         message: "Funds transfer successful",
       });
 
     } catch (error) {
+      await session.abortTransaction();
+      session.endSession();
+
       res.status(500).json({
         message: "Funds transfer failed!",
         error: error.message,
       });
     }
+
   } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+
     res.status(500).json({
       message: "Internal server error",
       error: error.message,
     });
+    
+  } finally {
+    session.endSession();
   }
 });
 

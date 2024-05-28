@@ -100,6 +100,7 @@ router.post("/signin", async (req, res) => {
       }, JWT_SECRET);
   
       res.json({
+        message: "Login successful",
         token: token,
       });
       return;
