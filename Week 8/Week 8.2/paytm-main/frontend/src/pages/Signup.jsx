@@ -41,7 +41,7 @@ export const Signup = () => {
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
-              placeholder="harkirat@gmail.com"
+              placeholder="tanish@gmail.com"
               label={"Email"}
             />
             
@@ -64,7 +64,10 @@ export const Signup = () => {
                   });
 
                   // store the data in browser local storage
-                  localStorage.setItem("token", response.data.token)
+                  localStorage.setItem("signupToken", response.data.token)
+
+                  // when user get logout
+                  // localStorage.removeItem("signupToken")
                 }}
                 label={"Sign up"}
               />
