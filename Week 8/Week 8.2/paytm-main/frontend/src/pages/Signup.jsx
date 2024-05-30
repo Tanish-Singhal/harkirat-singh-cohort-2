@@ -64,7 +64,7 @@ export const Signup = () => {
                   });
 
                   // store the data in browser local storage
-                  localStorage.setItem("signupToken", response.data.token)
+                  localStorage.setItem("token", response.data.token);
 
                   // when user get logout
                   // localStorage.removeItem("signupToken")
