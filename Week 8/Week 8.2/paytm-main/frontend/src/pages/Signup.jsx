@@ -5,12 +5,36 @@ import { InputBox } from "../components/InputBox";
 import { Button } from "../components/Button";
 import { BottomWarning } from "../components/BottomWarning";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const Signup = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSignup = async () => {
+    try {
+      const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
+        username: username,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+      });
+
+      // store the data in browser local storage
+      localStorage.setItem("token", response.data.token);
+      navigate("/dashboard"); 
+
+      // when user get logout
+      // localStorage.removeItem("signupToken")
+
+    } catch (error) {
+      console.error("Signup failed:", error.message);
+    }
+  }
 
   return (
     <>
@@ -55,20 +79,7 @@ export const Signup = () => {
             
             <div className="pt-4">
               <Button
-                onClick={async () => {
-                  const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
-                    username: username,
-                    password: password,
-                    firstName: firstName,
-                    lastName: lastName,
-                  });
-
-                  // store the data in browser local storage
-                  localStorage.setItem("token", response.data.token);
-
-                  // when user get logout
-                  // localStorage.removeItem("signupToken")
-                }}
+                onClick={handleSignup}
                 label={"Sign up"}
               />
             </div>
