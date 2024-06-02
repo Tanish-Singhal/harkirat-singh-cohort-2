@@ -1,0 +1,9 @@
+Custom Hooks
+Hooks that you create yourself, so other people can use them are called custom hooks.
+1. It uses another hook internally
+2. Starts with "use"
+
+Example: 
+1. Data fetching hooks
+2. Browser functionality related hooks - useOnlineState, useWindowSize, useMousePosition
+3. Performance/Timer based useInterval, useDebounce
