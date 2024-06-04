@@ -16,9 +16,9 @@ console.log(sum(2, 3));
 
 function isLegal(age: number) {
   if (age > 18) {
-      return true;
+    return true;
   } else {
-      return false
+    return false
   }
 }
 console.log(isLegal(2));
@@ -43,8 +43,17 @@ interface User {
   email?: string;      // user can pass if they want otherwise not
 }
 
+function isLegal2(person: User) {
+  if (person.age > 18) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
 function greeting(person: User) {
-  console.log("interface " + person.firstName)
+  console.log("hi there " + person.firstName)
 }
 
 greeting({              // email was not there
@@ -53,8 +62,14 @@ greeting({              // email was not there
   age: 20
 })
 
+isLegal2 ({
+  firstName: "Pratyush",
+  lastName: "Singhal",
+  age: 56
+})
 
-// implementing interfaces
+
+// Implementing interfaces
 interface Person {
   name: string;
   age: number;
@@ -80,7 +95,7 @@ console.log(e.name);
 
 console.log("----------------------------------------------------")
 
-// TODO: Types
+// Types
 type User2 = {
   firstName: string;
   lastName: string;
@@ -115,7 +130,7 @@ type Employee2 = {
   startDate: Date;
 };
 
-type Manager2 = {
+interface Manager2 {
   name: string;
   department: string;
 };
@@ -139,9 +154,9 @@ console.log("----------------------------------------------------")
 function maxValue(arr: number[]) {
   let max = 0;
   for (let i = 0; i < arr.length; i++) {
-      if (arr[i] > max) {
-          max = arr[i]
-      }
+    if (arr[i] > max) {
+      max = arr[i]
+    }
   }
   return max;
 }
@@ -158,15 +173,18 @@ function filteredUsers(users: User[]) {
     return users.filter(x => x.age >= 18);
 }
 
-console.log(filteredUsers([{
+console.log(filteredUsers([
+  {
     firstName: "harkirat",
     lastName: "Singh",
     age: 21
-}, {
+  },
+  {
     firstName: "Raman",
     lastName: "Singh",
     age: 16
-}, ]));
+  }
+]));
 
 
 console.log("----------------------------------------------------")
