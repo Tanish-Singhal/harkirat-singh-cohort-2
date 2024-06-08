@@ -24,9 +24,31 @@ async function createUsersTable() {
   }
 }
 
+async function createAddressesTable() {
+  try {
+    const result = await client.query(`
+      CREATE TABLE addresses (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL,
+        street VARCHAR(255) NOT NULL,
+        city VARCHAR(100) NOT NULL,
+        country VARCHAR(100) NOT NULL,
+        pincode VARCHAR(20),
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      );
+    `)
+
+    console.log("Table created successfully:", result);
+
+  } catch(error) {
+    console.error("Error while creating Table: ", error);
+  }
+}
+
 
 // TODO: inserting data in the Table
-async function insertUserData(username: string, email: string, password: string) {
+async function insertUsersData(username: string, email: string, password: string) {
   try {
     const query = "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)";
     const values = [username, email, password];
@@ -39,9 +61,22 @@ async function insertUserData(username: string, email: string, password: string)
   }
 }
 
+async function insertAddressesData(user_id: number, street: number, city: string, country: string, pincode: number) {
+  try {
+    const query = "INSERT INTO addresses (user_id, street, city, country, pincode) VALUES ($1, $2, $3, $4, $5)";
+    const values = [user_id, street, city, country, pincode];
+    const res = await client.query(query, values);
+    
+    console.log("Inserting data successfull", res);
+
+  } catch(error) {
+    console.error("Error while adding data", error);
+  }
+}
+
 
 // TODO: Fetching data from Table
-async function fetchingData(email: string) {
+async function fetchingUsersData(email: string) {
   try {
     const query = "SELECT * FROM users WHERE email = $1";
     const values = [email];
@@ -49,7 +84,7 @@ async function fetchingData(email: string) {
 
     if (result.rows.length > 0) {
       console.log("User found: ", result.rows[0]);
-      return result.rows[0];      
+      return result.rows[0];
     }
     else {
       console.log("No user found with the given email");
@@ -67,10 +102,14 @@ async function main() {
     await client.connect();
 
     await createUsersTable();
+    await createAddressesTable();
   
-    await insertUserData('testUser', 'testuser@example.com', 'testUser@1887');
+    await insertUsersData('testUser', 'testuser@example.com', 'testUser@1887');
+    await insertUsersData('testUser1', 'testuser1@example.com', 'testUser1@1887');
+    await insertUsersData('testUser2', 'testuser2@example.com', 'testUser2@1887');
+    await insertAddressesData(1, 410, 'Faridabad', 'India', 121002);
   
-    await fetchingData('testuser@example.com');
+    await fetchingUsersData('testuser@example.com');
   
   } catch(error) {
     console.error("Error in main function ", error);
