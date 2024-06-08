@@ -8,7 +8,7 @@ const client = new Client({
 async function createUsersTable() {
   try {
     const result = await client.query(`
-      CREATE TABLE users (
+      CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
         username VARCHAR(50) UNIQUE NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
@@ -27,13 +27,13 @@ async function createUsersTable() {
 async function createAddressesTable() {
   try {
     const result = await client.query(`
-      CREATE TABLE addresses (
+      CREATE TABLE IF NOT EXISTS addresses (
         id SERIAL PRIMARY KEY,
         user_id INTEGER NOT NULL,
-        street VARCHAR(255) NOT NULL,
+        street INTEGER NOT NULL,
         city VARCHAR(100) NOT NULL,
         country VARCHAR(100) NOT NULL,
-        pincode VARCHAR(20),
+        pincode INTEGER NOT NULL,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
       );
@@ -96,6 +96,19 @@ async function fetchingUsersData(email: string) {
   }
 }
 
+async function fetchingFullDetails() {
+  try {
+    const query = "SELECT u.id, u.username, a.street, a.city, a.country, a.pincode FROM users u JOIN addresses a ON u.id = a.user_id WHERE u.id = 2";
+    const result = await client.query(query);
+    
+    console.log("Users with Addresses:", result.rows);
+    return result.rows;
+
+  } catch(error) {
+    console.error("Error while fetching the data ", error);
+  }
+}
+
 
 async function main() {
   try {
@@ -108,8 +121,11 @@ async function main() {
     await insertUsersData('testUser1', 'testuser1@example.com', 'testUser1@1887');
     await insertUsersData('testUser2', 'testuser2@example.com', 'testUser2@1887');
     await insertAddressesData(1, 410, 'Faridabad', 'India', 121002);
+    await insertAddressesData(2, 654, 'Delhi', 'India', 124338);
+    await insertAddressesData(3, 884, 'Gurgaon', 'India', 652348);
   
     await fetchingUsersData('testuser@example.com');
+    await fetchingFullDetails();
   
   } catch(error) {
     console.error("Error in main function ", error);
