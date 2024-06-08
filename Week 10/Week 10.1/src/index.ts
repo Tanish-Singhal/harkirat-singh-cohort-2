@@ -1,22 +1,82 @@
-// write a function to create a usersimport { Client } from 'pg'
-import { Client } from "pg"
+import { Client } from "pg";
 
 const client = new Client({
-  connectionString: "postgresql://tanishsinghal510:fjr26HoTYMgx@ep-raspy-heart-46223096.us-east-2.aws.neon.tech/learn?sslmode=require"
-})
+  connectionString: "postgresql://neondb_owner:gZcjYwRz1u2G@ep-solitary-leaf-a5ghwh8v.us-east-2.aws.neon.tech/neondb?sslmode=require",
+});
 
+// TODO: creating a Table
 async function createUsersTable() {
-  await client.connect()
-  const result = await client.query(`
-    CREATE TABLE users (
-      id SERIAL PRIMARY KEY,
-      username VARCHAR(50) UNIQUE NOT NULL,
-      email VARCHAR(255) UNIQUE NOT NULL,
-      password VARCHAR(255) NOT NULL,
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-    );
-  `)
-  console.log(result)
+  try {
+    const result = await client.query(`
+      CREATE TABLE users (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(50) UNIQUE NOT NULL,
+        email VARCHAR(255) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+    
+    console.log("Table created successfully:", result);
+
+  } catch(error) {
+    console.error("Error while creating Table: ", error);
+  }
 }
 
-createUsersTable();
+
+// TODO: inserting data in the Table
+async function insertUserData(username: string, email: string, password: string) {
+  try {
+    const query = "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)";
+    const values = [username, email, password];
+    const res = await client.query(query, values);
+
+    console.log("Inserting data successfull", res);
+  
+  } catch(error) {
+    console.error("Error while adding data", error);
+  }
+}
+
+
+// TODO: Fetching data from Table
+async function fetchingData(email: string) {
+  try {
+    const query = "SELECT * FROM users WHERE email = $1";
+    const values = [email];
+    const result = await client.query(query, values);
+
+    if (result.rows.length > 0) {
+      console.log("User found: ", result.rows[0]);
+      return result.rows[0];      
+    }
+    else {
+      console.log("No user found with the given email");
+      return null;
+    }
+
+  } catch(error) {
+    console.error("Error while fetching the data ", error);
+  }
+}
+
+
+async function main() {
+  try {
+    await client.connect();
+
+    await createUsersTable();
+  
+    await insertUserData('testUser', 'testuser@example.com', 'testUser@1887');
+  
+    await fetchingData('testuser@example.com');
+  
+  } catch(error) {
+    console.error("Error in main function ", error);
+  } finally {
+    await client.end();
+  }
+}
+
+main().catch(console.error);
