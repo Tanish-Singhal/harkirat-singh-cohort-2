@@ -1,0 +1,23 @@
+TODO: Cloud Provider (AWS, Google Cloud Provider, Azure)
+=>  Rent Virtaul Machine
+    Put it in auto scale group
+    Delpoy it in Kubernetes cluster
+=> downsides: take care of how/when to scale
+              Base cost still charging if no-one is visiting
+              Monitoring various servers to make sure no server is downsides
+
+TODO: Serverless Backend
+=> These are also the Backend Cloud Providers. In this developer and operators do not have to worry about the servers.
+   Easy Deploy
+   Autoscale
+   Charge you on a per request basis (if noone is accessing the website, no charging)
+=> downsides: More Expensive at scale
+              Cold start problem (when noone is accessing the website, then the website server was go into colding state or sleep. When the first user visit the website then the server took some more time to load all the things)
+
+TODO: Examples: AWS Lamda
+                Google Cloud Functions
+                Cloudflare Workers
+
+TODO: Setup
+1. creating cloudflare application
+npm create cloudflare -- my-app
