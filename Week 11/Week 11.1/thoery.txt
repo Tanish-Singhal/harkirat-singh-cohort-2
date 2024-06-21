@@ -18,6 +18,27 @@ TODO: Examples: AWS Lamda
                 Google Cloud Functions
                 Cloudflare Workers
 
+
+TODO: How cloudflare workers work?
+"wrangler": "^3.60.3"   =>  it is the cloudflare worker CLI, which help us to run the backend code. It help us to replace express.
+Cloudflare expects you to just write the logic to handle the request. Creating an HTTP server on top is handled by the clouflare (wrangler locally).
+
+
 TODO: Setup
 1. creating cloudflare application
 npm create cloudflare -- my-app
+
+2. running the application (locally)
+npm run dev
+
+3. connecting the local code to the cloudflare account
+npx wrangler login
+npm run deploy
+
+TODO: If cloudflare workers donot suppotr express, then if we already have an express application then how to upload it in cloudflare workers ?
+=> write all the code in generic way
+=> use libraries like "honojs/hono" (hono is a routing engine)
+
+TODO: Setup
+1. creating hono application
+npm create hono@latest hono-app
