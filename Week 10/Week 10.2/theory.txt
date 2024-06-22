@@ -30,7 +30,8 @@ TODO: Prisma Client
 after created a prisma file you can generate these clients that you can use in your node.js application
 
 command    =>    npx prisma generate
-after running this command you can write any logic in the index.ts file which you created in the src folder
+after running this command you can write any logic in the index.ts file which you created in the src folder,
+it will create auto generated client based on the prisma.schema file which we can use in the index.ts file
 
 after writing the logic in index.ts file
 cmd    =>    tsc -b
