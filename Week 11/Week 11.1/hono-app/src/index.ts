@@ -23,7 +23,7 @@ app.use(authMiddleware);
 
 
 // TODO: how to access the body, headers and params in hono
-app.get("/", async (c) => {
+app.post("/", authMiddleware, async (c) => {
   const body = await c.req.json();
 
   console.log(body);
@@ -33,4 +33,4 @@ app.get("/", async (c) => {
   return c.text('Hello Hono!');
 })
 
-export default app
+export default app;
