@@ -106,8 +106,8 @@ function greeting2(person: User2) {
   console.log("types " + person.firstName)
 }
 
-greeting({            
-  firstName: "Tanish",
+greeting2({            
+  firstName: "Ram",
   lastName: "Singhal",
   age: 20
 })
@@ -142,6 +142,7 @@ const teamLead: TeamLead = {
   startDate: new Date(),
   department: "Software developer"
 };
+console.log(teamLead);
 
 
 // FIXME: What is the difference between Interfaces and Types (interview question)
@@ -170,7 +171,7 @@ interface User {
 }
 
 function filteredUsers(users: User[]) {
-    return users.filter(x => x.age >= 18);
+  return users.filter(x => x.age >= 18);
 }
 
 console.log(filteredUsers([
