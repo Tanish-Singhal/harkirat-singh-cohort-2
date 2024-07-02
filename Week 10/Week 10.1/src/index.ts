@@ -12,7 +12,6 @@ async function createUsersTable() {
         id SERIAL PRIMARY KEY,
         username VARCHAR(50) UNIQUE NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
-        password VARCHAR(255) NOT NULL,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
     `);
@@ -31,10 +30,8 @@ async function createAddressesTable() {
       CREATE TABLE IF NOT EXISTS addresses (
         id SERIAL PRIMARY KEY,
         user_id INTEGER NOT NULL,
-        street INTEGER NOT NULL,
         city VARCHAR(100) NOT NULL,
         country VARCHAR(100) NOT NULL,
-        pincode INTEGER NOT NULL,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
       );
@@ -49,10 +46,13 @@ async function createAddressesTable() {
 
 
 // TODO: inserting data in the Table
-async function insertUsersData(username: string, email: string, password: string) {
+async function insertUsersData(username: string, email: string) {
   try {
-    const query = "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)";
-    const values = [username, email, password];
+    const query = `
+      INSERT INTO users (username, email) 
+      VALUES ($1, $2)
+    `;
+    const values = [username, email];
     const res = await client.query(query, values);
 
     console.log("Inserting data successfull", res);
@@ -62,13 +62,16 @@ async function insertUsersData(username: string, email: string, password: string
   }
 }
 
-async function insertAddressesData(user_id: number, street: number, city: string, country: string, pincode: number) {
+async function insertAddressesData(user_id: number, city: string, country: string) {
   try {
-    const query = "INSERT INTO addresses (user_id, street, city, country, pincode) VALUES ($1, $2, $3, $4, $5)";
-    const values = [user_id, street, city, country, pincode];
+    const query = `
+      INSERT INTO addresses (user_id, city, country) 
+      VALUES ($1, $2, $3)
+    `;
+    const values = [user_id, city, country];
     const res = await client.query(query, values);
     
-    console.log("Inserting data successfull", res);
+    console.log("Inserting data successful", res);
 
   } catch(error) {
     console.error("Error while adding data", error);
@@ -97,33 +100,26 @@ async function fetchingUsersData(email: string) {
   }
 }
 
-async function fetchingFullDetails() {
-  try {
-    const query = "SELECT u.id, u.username, a.street, a.city, a.country, a.pincode FROM users u JOIN addresses a ON u.id = a.user_id WHERE u.id = 2";
-    const result = await client.query(query);
-    
-    console.log("Users with Addresses:", result.rows);
-    return result.rows;
-
-  } catch(error) {
-    console.error("Error while fetching the data ", error);
-  }
-}
-
 
 // TODO: Trasactions
 // when you want to run multiple queries such that all of them run or none of them do.
-async function insertUserAndAddress(username: string, email: string, password: string, city: string, country: string, street: string, pincode: string) {
+async function insertUserAndAddress(username: string, email: string, city: string, country: string) {
   try {
     // starting of the transaction
     await client.query('BEGIN');
 
-    const insertUserText = "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)"
-    const usersValues = [username, email, password];
+    const insertUserText = `
+      INSERT INTO users (username, email)
+      VALUES ($1, $2)
+    `;
+    const usersValues = [username, email];
     const usersResult = await client.query(insertUserText, usersValues);
 
-    const insertAddressText  = "INSERT INTO addresses (user_id, city, country, street, pincode) VALUES ($1, $2, $3, $4, $5)"
-    const addressValues = [username, email, password];
+    const insertAddressText  = `
+      INSERT INTO addresses (user_id, city, country)
+      VALUES ($1, $2, $3);
+    `;
+    const addressValues = [city, country];
     const addressResult = await client.query(insertAddressText, addressValues);
 
     await client.query('COMMIT');
@@ -144,18 +140,19 @@ async function main() {
     await createUsersTable();
     await createAddressesTable();
   
-    await insertUsersData('testUser', 'testuser@example.com', 'testUser@1887');
-    await insertUsersData('testUser1', 'testuser1@example.com', 'testUser1@1887');
-    await insertUsersData('testUser2', 'testuser2@example.com', 'testUser2@1887');
-    await insertAddressesData(1, 410, 'Faridabad', 'India', 121002);
-    await insertAddressesData(2, 654, 'Delhi', 'India', 124338);
-    await insertAddressesData(3, 884, 'Gurgaon', 'India', 652348);
+    await insertUsersData('testUser1', 'testuser1@example.com');
+    await insertUsersData('testUser2', 'testuser2@example.com');
+    await insertUsersData('testUser3', 'testuser3@example.com');
+    await insertUsersData('testUser4', 'testuser4@example.com');
+    await insertAddressesData(1, 'Faridabad', 'India');
+    await insertAddressesData(1, 'Gurgaon', 'India');
+    await insertAddressesData(2, 'Delhi', 'India');
+    await insertAddressesData(3, 'Gurgaon', 'India');
   
     await fetchingUsersData('testuser@example.com');
-    await fetchingFullDetails();
+    
+    await insertUserAndAddress('johndoe', 'john.doe@example.com', 'New York', 'USA');
 
-    await insertUserAndAddress('johndoe', 'john.doe@example.com', 'securepassword123', 'New York', 'USA', '123 Broadway St', '10001');
-  
   } catch(error) {
     console.error("Error in main function ", error);
   } finally {
