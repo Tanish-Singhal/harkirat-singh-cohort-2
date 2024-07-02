@@ -79,6 +79,43 @@ async function insertAddressesData(user_id: number, city: string, country: strin
 }
 
 
+// TODO: Update data
+async function updateUser(username: string, email: string, userId: number) {
+  try {
+    const query = `
+      UPDATE users
+      SET username = $1, email = $2
+      WHERE id = $3
+    `;
+    const values = [username, email, userId];
+    const res = await client.query(query, values);
+
+    console.log("Updating user data successful", res);
+
+  } catch(error) {
+    console.error("Error while updating user data", error);
+  }
+}
+
+
+// TODO: Delete the data
+async function deleteUser(userId: number) {
+  try {
+    const query = `
+      DELETE FROM users
+      WHERE id = $1
+    `;
+    const values = [userId];
+    const res = await client.query(query, values);
+
+    console.log("Deleting user successful", res);
+
+  } catch(error) {
+    console.error("Error while deleting user", error);
+  }
+}
+
+
 // TODO: Fetching data from Table
 async function fetchingUsersData(email: string) {
   try {
@@ -174,16 +211,24 @@ async function main() {
     await insertUsersData('testUser2', 'testuser2@example.com');
     await insertUsersData('testUser3', 'testuser3@example.com');
     await insertUsersData('testUser4', 'testuser4@example.com');
+    await insertUsersData('testUser5', 'testuser5@example.com');
     await insertAddressesData(1, 'Faridabad', 'India');
     await insertAddressesData(1, 'Gurgaon', 'India');
     await insertAddressesData(2, 'Delhi', 'India');
     await insertAddressesData(3, 'Gurgaon', 'India');
   
-    await fetchingUsersData('testuser@example.com');
+    await fetchingUsersData('testuser1@example.com');
+    await fetchingUsersData('testuser5@example.com');
+
+    await updateUser('updatedUser', 'updated@example.com', 5);
+    await fetchingUsersData('testuser5@example.com');
+    await deleteUser(5);
+    await fetchingUsersData('testuser5@example.com');
     
     await insertUserAndAddress('johndoe', 'john.doe@example.com', 'New York', 'USA');
     
     await fetchingFullDetails("1");
+    await fetchingFullDetails("4");
 
   } catch(error) {
     console.error("Error in main function ", error);
