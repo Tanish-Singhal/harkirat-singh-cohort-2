@@ -133,6 +133,36 @@ async function insertUserAndAddress(username: string, email: string, city: strin
 }
 
 
+// TODO: Joins
+async function fetchingFullDetails(userId: string) {
+  try {
+    const query = `
+      SELECT u.id, u.username, u.email, a.city, a.country
+      FROM users u
+      JOIN addresses a ON u.id = a.user_id
+      WHERE u.id = $1
+    `;
+    const result = await client.query(query, [userId]);
+
+    if (result.rows.length > 0) {
+      console.log('User and address found:', result.rows[0]);
+      return result.rows[0];
+    } else {
+      console.log('No user or address found with the given ID.');
+      return null;
+    }
+
+  } catch(error) {
+    console.error("Error while fetching the data ", error);
+  }
+}
+
+// INNER JOIN => JOIN and INNER JOIN are same
+// LEFT JOIN => Data from the LEFT table and RIGHT Table also if available
+// RIGHT JOIN => Data from the RIGHT table and LEFT Table also if available (but in this current structure it's impossible to have a right column without it's corresponding left column as we define it in the foreign key)
+// FULL JOIN => When you want all the data irrespective of their user data
+
+
 async function main() {
   try {
     await client.connect();
@@ -152,6 +182,8 @@ async function main() {
     await fetchingUsersData('testuser@example.com');
     
     await insertUserAndAddress('johndoe', 'john.doe@example.com', 'New York', 'USA');
+    
+    await fetchingFullDetails("1");
 
   } catch(error) {
     console.error("Error in main function ", error);
