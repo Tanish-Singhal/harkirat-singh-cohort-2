@@ -24,6 +24,7 @@ async function createUsersTable() {
   }
 }
 
+// Foreign Key
 async function createAddressesTable() {
   try {
     const result = await client.query(`
@@ -110,6 +111,32 @@ async function fetchingFullDetails() {
 }
 
 
+// TODO: Trasactions
+// when you want to run multiple queries such that all of them run or none of them do.
+async function insertUserAndAddress(username: string, email: string, password: string, city: string, country: string, street: string, pincode: string) {
+  try {
+    // starting of the transaction
+    await client.query('BEGIN');
+
+    const insertUserText = "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)"
+    const usersValues = [username, email, password];
+    const usersResult = await client.query(insertUserText, usersValues);
+
+    const insertAddressText  = "INSERT INTO addresses (user_id, city, country, street, pincode) VALUES ($1, $2, $3, $4, $5)"
+    const addressValues = [username, email, password];
+    const addressResult = await client.query(insertAddressText, addressValues);
+
+    await client.query('COMMIT');
+
+    console.log("Users and Address inserted", usersResult, addressResult);
+
+  } catch(error) {
+    await client.query('ROLLBACK');     // Roll back the transaction on error
+    console.log("Error while inserting the data", error);
+  }
+}
+
+
 async function main() {
   try {
     await client.connect();
@@ -126,6 +153,8 @@ async function main() {
   
     await fetchingUsersData('testuser@example.com');
     await fetchingFullDetails();
+
+    await insertUserAndAddress('johndoe', 'john.doe@example.com', 'securepassword123', 'New York', 'USA', '123 Broadway St', '10001');
   
   } catch(error) {
     console.error("Error in main function ", error);
