@@ -12,7 +12,7 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Todo" (
-    "id" SERIAL NOT NULL,
+    "id" SERIAL NOT NULL, 
     "title" TEXT NOT NULL,
     "done" BOOLEAN NOT NULL DEFAULT false,
     "description" TEXT,

@@ -10,16 +10,17 @@ generator client {
 
 datasource db {
   provider = "postgresql" // mongodb or mysql (if you are using it)
-  url      = "postgresql://neondb_owner:vUM6pW5FoZSd@ep-broad-union-a5uzv42h.us-east-2.aws.neon.tech/neondb?sslmode=require"
+  url      = env("DATABASE_URL")
 }
 
 model User {
   id          Int     @id @default(autoincrement())
   username    String  @unique
-  password    String?
-  firstName   String
+  password    String
+  firstName   String?
   lastName    String?
-  phoneNumber String?
+  email       String  @unique
+  todos       Todo[]  // when we link User with Todo then in User we will store the id of the Todo according to its User  
 }
 
 // if you want to make an optional field then add a "?" in the type of the field
@@ -30,4 +31,5 @@ model Todo {
   done        Boolean @default(false)
   description String?
   user_id     Int     // when we link User with Todo then in userId we will store the id of the User according to its Todo
+  user       User    @relation(fields: [user_id], references: [id])
 }
