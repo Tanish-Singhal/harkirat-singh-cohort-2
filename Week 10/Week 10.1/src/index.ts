@@ -1,7 +1,11 @@
 import { Client } from "pg";
+import dotenv from "dotenv";
+
+// Load environment variables from .env file
+dotenv.config();
 
 const client = new Client({
-  connectionString: "postgresql://neondb_owner:gZcjYwRz1u2G@ep-solitary-leaf-a5ghwh8v.us-east-2.aws.neon.tech/neondb?sslmode=require",
+  connectionString: process.env.DATABASE_URL,
 });
 
 // TODO: creating a Table
@@ -153,8 +157,8 @@ async function insertUserAndAddress(username: string, email: string, city: strin
     const usersResult = await client.query(insertUserText, usersValues);
 
     const insertAddressText  = `
-      INSERT INTO addresses (user_id, city, country)
-      VALUES ($1, $2, $3);
+      INSERT INTO users (username, email)
+      VALUES ($1, $2)
     `;
     const addressValues = [city, country];
     const addressResult = await client.query(insertAddressText, addressValues);
@@ -171,7 +175,7 @@ async function insertUserAndAddress(username: string, email: string, city: strin
 
 
 // TODO: Joins
-async function fetchingFullDetails(userId: string) {
+async function fetchingFullDetails(userId: number) {
   try {
     const query = `
       SELECT u.id, u.username, u.email, a.city, a.country
@@ -227,8 +231,8 @@ async function main() {
     
     await insertUserAndAddress('johndoe', 'john.doe@example.com', 'New York', 'USA');
     
-    await fetchingFullDetails("1");
-    await fetchingFullDetails("4");
+    await fetchingFullDetails(1);
+    await fetchingFullDetails(4);
 
   } catch(error) {
     console.error("Error in main function ", error);

@@ -20,12 +20,6 @@ Why SQL?
 -> update the schema as application grows
 
 
-Installation
-npm init -y
-npm tsc --init
-npm i pg
-npm i @types/pg
-
 
 Database URL 
 postgresql://username:password@host/database
@@ -62,3 +56,10 @@ SQL Injection
 ; DELETE * FROM users;
 
 whenever the user gives you anyhting, you should do not store the things as such in the database, because the user might give you some errorness sql query data, which will harm your data in the database
+
+
+Installation
+npm init -y
+npm tsc --init
+npm i pg
+npm i @types/pg
