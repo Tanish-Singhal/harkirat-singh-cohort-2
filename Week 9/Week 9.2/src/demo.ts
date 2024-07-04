@@ -52,6 +52,12 @@ function isLegal2(person: User) {
   }
 }
 
+isLegal2 ({
+  firstName: "Pratyush",
+  lastName: "Singhal",
+  age: 56
+})
+
 function greeting(person: User) {
   console.log("hi there " + person.firstName)
 }
@@ -61,13 +67,6 @@ greeting({              // email was not there
   lastName: "Singhal",
   age: 20
 })
-
-isLegal2 ({
-  firstName: "Pratyush",
-  lastName: "Singhal",
-  age: 56
-})
-
 
 // Implementing interfaces
 interface Person {
@@ -149,10 +148,13 @@ console.log(teamLead);
 // => Interfaces can be extended into class
 //    types you can do OR and AND (union and intersection)
 
+
 console.log("----------------------------------------------------")
 
 // TODO: Arrays
-function maxValue(arr: number[]) {
+type numberArray = number[];
+
+function maxValue(arr: numberArray) {
   let max = 0;
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] > max) {
@@ -176,7 +178,7 @@ function filteredUsers(users: User[]) {
 
 console.log(filteredUsers([
   {
-    firstName: "harkirat",
+    firstName: "Rahul",
     lastName: "Singh",
     age: 21
   },
@@ -184,14 +186,24 @@ console.log(filteredUsers([
     firstName: "Raman",
     lastName: "Singh",
     age: 16
+  },
+  {
+    firstName: "Sharan",
+    lastName: "Singh",
+    age: 25
   }
 ]));
+
+// Problem in Array:
+// 1. what if we pass maxValue([1, 2, 3, "tanish"])
+// 2. maxValue.toupperCase()
+// These problem can be solved by Generics
 
 
 console.log("----------------------------------------------------")
 
 // TODO: Enums
-// It is something you use, when you know there are limited set of inputs to a specific function
+// It is something you use, when you know there are limited set of inputs to a specific function and they are some constant values which you define in the enum only (here we have up, down, left, right)
 
 enum Direction {
   Up = "up", // 0
@@ -212,10 +224,36 @@ doSomething(Direction.Down);
 console.log(Direction.Left);
 console.log(Direction.Right);
 
+
+// common use cases of enums
+enum ResponseStatus {
+  Success = 200,
+  NotFound = 404,
+  Error = 500
+}
+
+// app.get("/", (req, res) => {
+//   if (!req.query,userId) {
+//     res.status(ResponseStatus.Error).json({});
+//   }
+//   // and so on...
+//   res.send(ResponseStatus.Success).json({});
+// })
+
+
 console.log("----------------------------------------------------")
 
-// TODO: Generics
-// type Input = number | string;
+// TODO: Generics (In this we can solve the problem which happen in the Array part)
+// here T represents, arg will be represent by any type of data, you tell me while giving the input that which type of data you are giving
+
+function identity<T>(arg: T) {
+  return arg;
+}
+
+let output1 = identity<string>("myString");
+let output2 = identity<number>(123);
+
+
 
 function firstEle<T>(arr: T[]) {
   return arr[0]; 
@@ -225,6 +263,7 @@ const value = firstEle<string>(["tanish", "singhal"]);
 const value2 = firstEle<number>([1, 2, 3]);
 const value3 = firstEle<boolean>([true, false]);
 console.log(value.toUpperCase());
+
 
 console.log("----------------------------------------------------")
 

@@ -1,3 +1,12 @@
+TODO: Installation
+
+npm install -g typescript
+npm init -y
+npx tsc --init
+tsc -b
+node index.js
+
+
 1. target
 The target option in a tsconfig.json file specifies the ECMAScript target version to which the TypeScript compiler will compile the TypeScript code.
 
