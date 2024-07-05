@@ -1,0 +1,3 @@
+If we want to use tpescript in express, then by this following command we can install typescript in express
+
+npm i express @types/express zod
