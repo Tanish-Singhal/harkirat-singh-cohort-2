@@ -1,0 +1,49 @@
+TODO: What is connection pool and why we need it ?
+- When we delpoy a cloudflare application, then it gets deployed in various machines (server) around the world. 
+So by this there are lots of open connection to your database.
+That's when connection pool comes into the picture. 
+
+Workers around   -->  connection   -->  Postgres  
+  the world      -->    pool            Database
+
+So there is only one open connectionn to our database. All the connection request first go to the connection pool then go to the Database.
+
+
+
+TODO: Setup
+First we created a cloudflare projects. By running the following command: 
+- npm create cloudflare@latest -- cloudflare-connpool
+
+Then we install hono into the project. By running the following command:
+- npm install hono
+
+Then we install prisma into the project. By running the following command:
+- npm install --save-dev prisma
+
+Then we initialize prisma into our project. By running the following command:
+- npx prisma init
+
+Now we migrate our database. By running the following command:
+- npx prisma migrate dev --name init
+
+Prisma Accelerate to make the connection pool.
+- go to prisma Accelerate website.
+- create a new project
+- click on Accelerate
+- paste the connection string of the original connection string (choose the region of the connection pool near your database server)
+- generate the API key
+
+Generally, we store the connection strings in the env file, but in wrangler we store the connection string in wrangler.toml file
+
+- that means, all the environment variable you want to use from the index.ts file or through coding are to be present in the "wrnagler.toml" file
+- and all the environment variables you want to use from the CLI are to be present in the ".env" file
+
+Now install the Prisma Accelerate dependency in your project
+- npm install @prisma/extension-accelerate
+
+Now generate the client
+- npx prisma generate --no-engine
+
+After writing the code in index.ts, login into your cloudflare account for deployment
+- npx wrangler whoami
+- npm run deploy
