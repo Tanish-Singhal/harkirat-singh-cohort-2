@@ -1,0 +1,21 @@
+In this file i will write all the step I have done in making this project.
+
+1. create a backend folder using hono (for cloudflare workers)
+npm create hono@latest
+
+2. install and initialize prisma in the backend folder
+npm i prisma
+npx prisma inti
+
+3. updating the URL of database and connection pool
+
+4. after defining the schema, migrate the schema
+npx prisma migrate dev --name init_schema
+
+5. generate the prisma client
+npx prisma generate --no-engine
+
+6. add the prisma accelerate extension
+npm install @prisma/extension-accelerate
+
+7. For authentication we install hono's jwt
