@@ -112,3 +112,59 @@ blogRouter.put('/update', async (c) => {
     });
   }
 });
+
+// TODO: Get all post route
+blogRouter.get('/bulk', async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env?.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const blogs = await prisma.blog.findMany();
+
+    return c.json({
+      blogs: blogs,
+    });
+
+  } catch(e) {
+    c.status(403);
+    return c.json({
+      error: "error while fetching the post",
+    });
+  }
+})
+
+// TODO: Get single post
+blogRouter.get('/:id', async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env?.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const id = c.req.param('id');
+
+  try {
+    const blog = await prisma.blog.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    if (blog) {
+      return c.json({
+        blog: blog
+      });
+    } 
+    else {
+      c.status(404);
+      return c.json({
+        error: 'Post not found'
+      });
+    }
+
+  } catch(e) {
+    c.status(403);
+    return c.json({
+      error: "error while fetching the post",
+    });
+  }
+});
