@@ -1,21 +1,44 @@
 In this file i will write all the step I have done in making this project.
 
 1. create a backend folder using hono (for cloudflare workers)
-npm create hono@latest
+- npm create hono@latest
 
 2. install and initialize prisma in the backend folder
-npm i prisma
-npx prisma inti
+- npm i prisma
+- npx prisma inti
 
 3. updating the URL of database and connection pool
 
 4. after defining the schema, migrate the schema
-npx prisma migrate dev --name init_schema
+- npx prisma migrate dev --name init_schema
 
 5. generate the prisma client
-npx prisma generate --no-engine
+- npx prisma generate --no-engine
 
 6. add the prisma accelerate extension
-npm install @prisma/extension-accelerate
+- npm install @prisma/extension-accelerate
 
-7. For authentication we install hono's jwt
+7. After writing all the routes (deploy it)
+- npx wrangler whoami
+- npm run deploy
+
+8. we have to shift all the zod validation check in the common folder.
+we want to publish all the zod validation to the npm. So that we can import the zod validation from the npm, so that both the frontend and backend folder can use this.
+- mkdir common
+- npm init -y
+- npx tsc --init
+- src, dist, and declaration
+- npm i zod
+
+9. change the package.json of common folder
+- "name": "@tanish/medium-blog-common"
+- "main": "dist/index.js"
+- tsc -b
+- mkdir .npmignore
+- write src in it
+
+10. publish the zod
+- npm publish  --access public
+
+11. imoprt that in hte backend folder, where you want to use it
+- npm i <repo name>
