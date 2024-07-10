@@ -40,5 +40,8 @@ we want to publish all the zod validation to the npm. So that we can import the 
 10. publish the zod
 - npm publish  --access public
 
-11. imoprt that in hte backend folder, where you want to use it
+11. imoprt that in the backend and frontend folder, where you want to use it
 - npm i <repo name>
+
+12. install routing in frontend folder
+- npm i react-router-dom
