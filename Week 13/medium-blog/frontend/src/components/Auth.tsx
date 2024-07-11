@@ -21,8 +21,10 @@ export const Auth = ({ type }: {type: "signup" | "signin"}) => {
           {type === "signin" ? "Sign up" : "Sign in"}
         </Link>
       </h3>
+
       <div className="w-80 mt-6">
-        <Inputbox
+        {/* here i add a conditional statement, bed on which i have show or hide the name input box */}
+        {type === "signup" ? <Inputbox
           label="Name"
           placeholder="Tanish Singhal"
           onChange={(e) => {
@@ -31,7 +33,7 @@ export const Auth = ({ type }: {type: "signup" | "signin"}) => {
               name: e.target.value,
             });
           }}
-        />
+        /> : null}
 
         <Inputbox
           label="Email"
@@ -51,7 +53,7 @@ export const Auth = ({ type }: {type: "signup" | "signin"}) => {
           onChange={(e) => {
             setPostInputs({
               ...postInputs,
-              name: e.target.value,
+              password: e.target.value,
             });
           }}
         />
