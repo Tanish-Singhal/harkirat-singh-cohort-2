@@ -1,5 +1,5 @@
-import { Quote } from "../components/Quote"
-import { Auth } from "../components/Auth"
+import { Quote } from "../components/Quote";
+import { AuthSignup } from "../components/AuthSignup";
 
 function Signup() {
   return (
@@ -8,10 +8,10 @@ function Signup() {
         <Quote />
       </div>
       <div>
-        <Auth type="signup" />
+        <AuthSignup />
       </div>
     </div>
-  )
+  );
 }
 
-export default Signup
+export default Signup;
