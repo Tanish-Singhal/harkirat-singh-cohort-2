@@ -45,3 +45,6 @@ we want to publish all the zod validation to the npm. So that we can import the 
 
 12. install routing in frontend folder
 - npm i react-router-dom
+
+13. install cors in the backend folder, so that the frontend and the backend can talk to each other
+- import { cors } from "hono/cors";
