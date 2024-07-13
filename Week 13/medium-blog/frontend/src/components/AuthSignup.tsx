@@ -21,12 +21,18 @@ export const AuthSignup = () => {
         `${BACKEND_URL}/api/v1/user/signup`,
         postInputs
       );
-      const jwt = response.data;
-      localStorage.setItem("token", jwt);
-      navigate("/blogs");
+      const { jwt } = response.data;
+      if (jwt) {
+        localStorage.setItem("token", jwt);
+        navigate("/blogs");
+      }
+      else {
+        alert("Error: Token not found in response");
+      }
 
     } catch (e) {
-      alert("Error while sign up");
+      console.error(e);
+      alert("Error while signing up");
     }
   }
 
@@ -67,7 +73,7 @@ export const AuthSignup = () => {
           }}
         />
       </div>
-      
+
       <button
         onClick={sendRequest}
         type="button"
