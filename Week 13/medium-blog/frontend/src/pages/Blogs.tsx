@@ -1,33 +1,33 @@
 import { Appbar } from "../components/Appbar";
 import { BlogCard } from "../components/BlogCard";
+import { useBlogs } from "../hooks";
 
 export const Blogs = () => {
+  const { loading, blogs } = useBlogs();
+
+  if (loading) {
+    return (
+      <div>
+        <h1 className="flex justify-center items-center text-lg font-bold">Loading...</h1>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Appbar />
 
       <div className="flex justify-center">
         <div className="max-w-4xl px-8">
-          <BlogCard
-            authorName="Tanish Singhal"
-            title="How an Ugly Single-Page Website Make $5,000 a Month with Affiliate Marketing"
-            content="This is my first blog. It contains interesting insights and experiences that I have gathered over the years. Stay tuned for more updates and feel free to share your thoughts in the comments section. This is my first blog. It contains interesting insights and experiences that I have gathered over the years. Stay tuned for more updates and feel free to share your thoughts in the comments section.This is my first blog. It contains interesting insights and experiences that I have gathered over the years. Stay tuned for more updates and feel free to share your thoughts in the comments section. This is my first blog. It contains interesting insights and experiences that I have gathered over the years. Stay tuned for more updates and feel free to share your thoughts in the comments section."
-            publishedDate="13/07/2024"
-          />
-
-          <BlogCard
-            authorName="Tanish Singhal"
-            title="How an Ugly Single-Page Website Make $5,000 a Month with Affiliate Marketing"
-            content="This is my first blog. It contains interesting insights and experiences that I have gathered over the years. Stay tuned for more updates and feel free to share your thoughts in the comments section. This is my first blog. It contains interesting insights and experiences that I have gathered over the years. Stay tuned for more updates and feel free to share your thoughts in the comments section.This is my first blog. It contains interesting insights and experiences that I have gathered over the years. Stay tuned for more updates and feel free to share your thoughts in the comments section. This is my first blog. It contains interesting insights and experiences that I have gathered over the years. Stay tuned for more updates and feel free to share your thoughts in the comments section."
-            publishedDate="13/07/2024"
-          />
-
-          <BlogCard
-            authorName="Tanish Singhal"
-            title="How an Ugly Single-Page Website Make $5,000 a Month with Affiliate Marketing"
-            content="This is my first blog. It contains interesting insights and experiences that I have gathered over the years. Stay tuned for more updates and feel free to share your thoughts in the comments section. This is my first blog. It contains interesting insights and experiences that I have gathered over the years. Stay tuned for more updates and feel free to share your thoughts in the comments section.This is my first blog. It contains interesting insights and experiences that I have gathered over the years. Stay tuned for more updates and feel free to share your thoughts in the comments section. This is my first blog. It contains interesting insights and experiences that I have gathered over the years. Stay tuned for more updates and feel free to share your thoughts in the comments section."
-            publishedDate="13/07/2024"
-          />
+          {blogs.map((blog) => (
+            <BlogCard
+              id={blog.id}
+              authorName={blog.author.name || "Anonymous"}
+              title={blog.title}
+              content={blog.content}
+              publishedDate="13/07/2024"
+            />
+          ))}
         </div>
       </div>
     </div>
