@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 
-interface Blog {
-  content: string;
-  title: string;
-  id: string;
-  author: {
-    name: string;
-  };
+export interface Blog {
+  "id": string,
+  "title": string,
+  "content": string,
+  "author": {
+    "name": string
+  }
 }
 
 export const useBlogs = () => {
@@ -29,5 +29,33 @@ export const useBlogs = () => {
       })
   }, []);
 
-  return { loading, blogs };
+  return {
+    loading,
+    blogs
+  };
 };
+
+
+export const useBlog = ({ id }: { id: string }) => {
+  const [loading, setLoading] = useState(true);
+  const [blog, setBlog] = useState<Blog>();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    axios.get(`${BACKEND_URL}/api/v1/blog/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}` 
+        }
+      })
+      .then((response) => {
+        setBlog(response.data.blog);
+        setLoading(false);
+      })
+  }, [id]);
+
+  return {
+    loading,
+    blog
+  };
+}
