@@ -1,6 +1,8 @@
 import { useBlog } from "../hooks"
 import { useParams } from "react-router-dom";
 import { FullBlog } from "../components/FullBlog"
+import FullBlogSkeleton from "../components/FullBlogSkeleton";
+import AppbarSkeleton from "../components/AppbarSkeleton";
 
 // selector family/atom family
 function Blog() {
@@ -13,7 +15,8 @@ function Blog() {
   if (loading) {
     return (
       <div>
-        <h1 className="flex justify-center items-center text-lg font-bold">Loading...</h1>
+        <AppbarSkeleton />
+        <FullBlogSkeleton />
       </div>
     );
   }
