@@ -11,3 +11,4 @@ function Avatar({ name, size = 8, fontsize = "sm" }: { name: string, size?: numb
 }
 
 export default Avatar;
+  

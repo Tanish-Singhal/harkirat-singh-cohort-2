@@ -2,7 +2,7 @@ import { useBlog } from "../hooks"
 import { useParams } from "react-router-dom";
 import { FullBlog } from "../components/FullBlog"
 import FullBlogSkeleton from "../components/FullBlogSkeleton";
-import AppbarSkeleton from "../components/AppbarSkeleton";
+import { Appbar } from "../components/Appbar";
 
 // selector family/atom family
 function Blog() {
@@ -15,7 +15,7 @@ function Blog() {
   if (loading) {
     return (
       <div>
-        <AppbarSkeleton />
+        <Appbar />
         <FullBlogSkeleton />
       </div>
     );
