@@ -1,7 +1,8 @@
+
 export default function Signup() {
   return (
     <div>
-      <h1>Sign Up</h1>
+      <h1>Sign up</h1>
     </div>
   );
 }
