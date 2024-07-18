@@ -21,3 +21,8 @@ NEXT offering
 Downsides
 1. Can’t be distributed via a CDN, always needs a server running that does server side rendering and hence is expensive
 2. Very opinionated, very hard to move out of it
+
+
+Layout
+- layout for seperate route can be formed by Layout.tsx inside the specific folder
+- if you want to ignore some step route, enclose them inside ()

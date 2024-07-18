@@ -16,7 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="p-4 font-semibold border-b text-center">
+          Appbar
+        </div>
+        {children}
+      </body>
     </html>
   );
 }
