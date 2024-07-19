@@ -1,0 +1,23 @@
+React vs Next
+1. In react, frontend and backend have to maintain in seperate folder. While in Next it's not.
+2. React does not provide routing out of the box, while nextjs has file based router.
+3. React is not SEO optimised.
+- not exactly teur today because of React Server Components
+4. Waterfalling problem which react have
+
+SEO
+- Google has crawlers (which scan the website).
+- In react, the initial HTML file does not contain anything. It was JS that put the content in the HTML file afterwards.
+
+Waterfalling
+- In React, HTML, CSS, Js comes one after the other. While in NEXT, all the things comes in a single requests.
+
+NEXT offering
+1. Server side rendering - Get’s rid of SEO problems
+2. API routes - Single codebase with frontend and backend
+3. File based routing (no need for react-router-dom)
+4. Bundle size optimisations, Static site generation
+
+Downsides
+1. Can’t be distributed via a CDN, always needs a server running that does server side rendering and hence is expensive
+2. Very opinionated, very hard to move out of it
