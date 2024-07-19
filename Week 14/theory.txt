@@ -26,3 +26,11 @@ Downsides
 Layout
 - layout for seperate route can be formed by Layout.tsx inside the specific folder
 - if you want to ignore some step route, enclose them inside ()
+
+TODO: IMPORTANT 
+Client-Side Components
+- things that don't sense to run on the server, has to be a client component (like useState, useEffect, onclick)
+by writing "use client" at the top
+- but after making something a client side component, all the nextjs offering like Server Side rendering, SEO optimised, get away.
+- for this try to make the client ide component as low as you can.
+- like in SigninBox, i make the button a seperate componentso that i can make the button a client side component not the whole SigninBox.
