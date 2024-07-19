@@ -34,3 +34,12 @@ by writing "use client" at the top
 - but after making something a client side component, all the nextjs offering like Server Side rendering, SEO optimised, get away.
 - for this try to make the client ide component as low as you can.
 - like in SigninBox, i make the button a seperate componentso that i can make the button a client side component not the whole SigninBox.
+
+
+
+
+NEXTJS BACKEND
+- In Next, we can define a async components (But you can only run async component in server-side only, not in client-side)
+- for making a loader, you just have to make a loader.tsx file, write a loader animation code. Just it.
+- for writing the Backend code, you have to first make a folder name "api"
+- for making a route, you have to make the folder of that name and make "route.ts" file in it.
