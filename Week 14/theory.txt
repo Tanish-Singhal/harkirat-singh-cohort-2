@@ -43,3 +43,10 @@ NEXTJS BACKEND
 - for making a loader, you just have to make a loader.tsx file, write a loader animation code. Just it.
 - for writing the Backend code, you have to first make a folder name "api"
 - for making a route, you have to make the folder of that name and make "route.ts" file in it.
+
+PRISMA
+- npm install prisma
+- npx prisma init
+- write the model and paster the postgres URL in .env file
+- npx prisma migrate dev --name init_schema
+- npx prisma generate
