@@ -1,17 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import client from "@/db";
 
-const client = new PrismaClient();
-
-export async function GET() {
-  // database logic
-  const user = await client.user.findFirst();
-
-  return NextResponse.json({
-    email: user?.email,
-    name: "ramdonName",
-  });
-}
+// const client = new PrismaClient();        // you should not write the prisma client like this in next during developemnt mode as it will create a new connection everytime you save the file
+// TODO: That's why always add db.ts file in the code as it is
 
 export async function POST(req: NextRequest) {
   // body
