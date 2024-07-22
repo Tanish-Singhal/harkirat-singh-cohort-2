@@ -1,0 +1,70 @@
+Docker Commands
+
+- docker
+to check if the docker is installed in the system or not.
+
+- docker images
+to see, what all the images we have installed in our docker
+
+- docker ps
+to see, what all the images we are currently running in our system
+
+- docker pull mongo
+it will pull the image from docker registory.
+
+- docker run mongo
+to run the image, but if you don't have to image locally it will automatically pull it from the registory
+
+- docker run -d mongo
+if you run the above command without -d, then you have to use another terminal to run other commands. To fix this you can detached the run commands by writing -d.
+
+- docker run -p 27018:27017 mongo
+to map the port of the local machine to the image port (local machine port : mongo machine port)
+
+- docker run -d -p 27018:27017 mongo
+
+- docker kill <container_id>
+to kill a running container
+
+- docker rmi -f <image_id>
+to delete the image from the machine
+
+
+
+
+Dockerfile
+FROM node:16-alpine                   // Base Image
+
+WORKDIR /app                          // Working directory
+
+COPY . .                              // it will copy all the things from the server code to my directory (/app)
+
+RUN npm install
+RUN npm run build
+RUN npx prisma generate
+
+EPOSE 3000
+
+CMD ["node", "dist/index.js"]       // final command that run when trunning hte container
+
+
+- docker build -t <image_name> .
+this is how you create the image of a docker file
+
+- npx prisma generate
+
+- docker run -p 3000:3000 -e DATABASE_URL="database url" <image_name>
+this you can aboe to send the environment variables to your project without deploying it on github or docker hub
+
+
+
+
+- docker exec -it <running_container_id>
+to execute a command inside a container 
+
+- exit
+to exit from the container
+
+- docker push your_username/your_reponame:tagname
+Pushing the dockerfile to docker hub
+
