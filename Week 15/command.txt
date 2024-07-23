@@ -66,3 +66,56 @@ this is how you create the image of a docker file
 
 - docker run -p 3000:3000 -e DATABASE_URL="database url" <image_name>
 this you can aboe to send the environment variables to your project without deploying it on github or docker hub
+
+
+
+
+- docker exec -it <running_container_id> /bin/bash
+to execute a command inside a container 
+
+- exit
+to exit from the container
+
+- docker push your_username/your_reponame:tagname
+Pushing the dockerfile to docker hub
+
+- docker volume ls 
+to list down all the volume you have created in the past
+
+- docker volume create <volume_database_name>
+to create a colume for a database
+
+- docker run -v volume_database:/data/db -p 27017:27017 mongo
+this is the location where the data was stored in the volumes
+
+- docker network ls 
+to list down all the network you have created in the past
+
+- docker network create my_custom_network
+to create a network, by which different container can talk to each other
+
+- docker run -d -v volume_database:/data/db --name mongotanish --network my_custom_network -p 27017:27017 mongo
+this is how you start the backend process in docker with the network
+
+- docker run -d -v volume_database:/data/db --name mongo --network my_custom_network -p 27017:27017 mongo
+this is how you start the mongodb database locally with the volume and the network
+
+- docker logs <container_id>
+to see all the logs of a container
+
+
+
+
+Pushing the image on DOCKERHUB
+- create account on docker hub and create a repository (repo name - tanish/backend)
+- to push it on docer hub, how ahve to locally build the images using the repo name in which you want to push the code (docker build -t tanish/backend .)
+- run this command (docker login)
+- docker push tanish/backend
+or
+- docker build -t tanish/backend:v1-dev .
+- docker push tanish/backend:v1-dev
+
+
+Docker Compose
+- docker network create tanish_network
+- docker volume create volume_database

@@ -59,3 +59,26 @@ CMD ["node", "dist/index.js"]         // final command that run when trunning ht
 
 run it 
 dockerbuild -t backend_live .
+
+
+
+
+Environment Variable
+- docker run -p 3000:3000 -e DATABASE_URL="database url" <image_name>
+
+
+Layers
+- If the first one is uncached, then everything below it is also uncached.
+
+
+Volume
+- If you restart a mongo docker container, you will notice that your data goes away. 
+So it was a good practice, to attach a volume to the container so that all the data can to stored to volume. and when you need it you can just attach that volume to that container.
+
+
+Network
+- If you want to connect two seperate container to each other so that they can talk to each other. you have to setup a network between both the containers.
+
+
+Docker Compose
+- If you want to create and set up all the network, port and volumes, then you can create a Docker YML file in which you can define all the things. and if run the YML file then everything will be setup in one click.
