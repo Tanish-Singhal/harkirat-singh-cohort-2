@@ -1,4 +1,29 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
+
+
+// fetching in react js
+// export default function User() {
+//   const [data, setData] = useState({
+//     email: "",
+//     name: "",
+//   })
+
+//   useEffect(() => {
+//     axios.get("http://localhost:3000/api/user")
+//       .then((response) => {
+//         setData(response.data)
+//       })
+//   })
+
+//   return (
+//     <div>
+//       {data.name}
+//       {data.email}
+//     </div>
+//   )
+// }
+
 
 async function getUserDetails() {
   await new Promise((r) => setTimeout(r, 3000));  // 3 seconds artificial delay

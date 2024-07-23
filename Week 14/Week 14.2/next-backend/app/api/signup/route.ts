@@ -14,8 +14,15 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  // extract the body
+  // body
   const body = await req.json();
+
+  // header
+  // req.headers.get("authorization");
+
+  // query parameter
+  // req.nextUrl.query.get("name");
+
   try {
     await client.user.create({
       data: {
