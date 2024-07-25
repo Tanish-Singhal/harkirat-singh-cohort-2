@@ -37,19 +37,44 @@ docker run -p 27018:27017 mongo
 Dockerfile
 - It is a text document that contain all the commands a user could call on the CLI to create an image.
 
+--------------------
 FROM node:16-alpine                   // Base Image
 
-WORKDIR /app                          // Working directory
+WORKDIR /usr/src/app                  // Working directory
+
+COPY package* .
+COPY ./prisma .
+
+RUN npm install
+RUN npx prisma generate
 
 COPY . .                              // it will copy all the things from the server code to my directory (/app)
 
-RUN npm install
 RUN npm run build
-RUN npx prisma generate
 
 EPOSE 3000
 
-CMD ["node", "dist/index.js"]       // final command that run when trunning hte container
+CMD ["node", "dist/index.js"]         // final command that run when trunning hte container
+------------------------
+
+run it 
+dockerbuild -t backend_live .
+
+
 
 
 Layers
+- If the first one is uncached, then everything below it is also uncached.
+
+
+Volume
+- If you restart a mongo docker container, you will notice that your data goes away. 
+So it was a good practice, to attach a volume to the container so that all the data can to stored to volume. and when you need it you can just attach that volume to that container.
+
+
+Network
+- If you want to connect two seperate container to each other so that they can talk to each other. you have to setup a network between both the containers.
+
+
+Docker Compose
+- If you want to create and set up all the network, port and volumes, then you can create a Docker YML file in which you can define all the things. and if run the YML file then everything will be setup in one click.
