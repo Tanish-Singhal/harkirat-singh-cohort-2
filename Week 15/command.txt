@@ -1,0 +1,68 @@
+Docker Commands
+
+- docker
+to check if the docker is installed in the system or not.
+
+- docker images
+to see, what all the images we have installed in our docker
+
+- docker ps
+to see, what all the images we are currently running in our system
+
+- docker pull mongo
+it will pull the image from docker registory.
+
+- docker run mongo
+to run the image, but if you don't have to image locally it will automatically pull it from the registory
+
+- docker run -d mongo
+if you run the above command without -d, then you have to use another terminal to run other commands. To fix this you can detached the run commands by writing -d.
+
+- docker run -p 27018:27017 mongo
+to map the port of the local machine to the image port (local machine port : mongo machine port)
+
+- docker run -d -p 27018:27017 mongo
+
+- docker kill <container_id>
+to kill a running container
+
+- docker rmi -f <image_id>
+to delete the image from the machine
+
+- docker logs <container_id>
+to see all the logs of a specific container
+
+
+
+
+Dockerfile
+--------------------
+FROM node:16-alpine                   // Base Image
+FROM mhart/alpine-node
+
+WORKDIR /usr/src/app                  // Working directory
+
+COPY package* .
+COPY ./prisma .
+
+RUN npm install
+RUN npx prisma generate
+
+COPY . .                              // it will copy all the things from the server code to my directory (/app)
+
+RUN npm run build
+
+EPOSE 3000
+
+CMD ["node", "dist/index.js"]         // final command that run when trunning hte container
+------------------------
+
+
+- docker build -t <image_name> .
+- docker build -t <image_name>:v1-dev .
+this is how you create the image of a docker file
+
+- npx prisma generate
+
+- docker run -p 3000:3000 -e DATABASE_URL="database url" <image_name>
+this you can aboe to send the environment variables to your project without deploying it on github or docker hub

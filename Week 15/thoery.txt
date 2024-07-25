@@ -1,0 +1,61 @@
+Container
+- Containers are a way to package and distribute software applications in a way that makes them easy to deploy and run consistently across different environments.
+- They allow you to package an application, along with all its dependencies and libraries, into a single unit that can be run on any machine with a container runtime, such as Docker.
+- Why container ? = different OS requires different steps and it is extremely hard to keep track of dependencies as project grow
+
+
+Benefits
+- Let you describe you configuration in a single file
+- Can run in isolated environments
+- Makes Local setup of OS projects a breeze
+- Makes installing auxiliary services/DBs easy
+
+Docker
+1. Docker Engine - Docker Engine is an open-source containerization technology that allows developers to package applications into container
+2. Docker CLI - Terminal
+3. Docker Registry - It is similar to github, but it lets you push images rather than sourcecode
+
+
+Images
+- A Docker image is a lightweight, standalone, executable package that includes everything needed to run a piece of software, including the code, a runtime, libraries, environment variables, and config files.
+
+
+Images vs Container
+- Image is something which you pull from the Docker Registry, and Container is where you run the image
+- Image (source code which you pull from github) and Container (the running of the source code on different ports)
+
+
+Port Mapping
+- The container port and the local machine port are different. By port mapping we can connect both local machine and the docker machine port.
+
+docker run -p 27018:27017 mongo
+              local mongo
+            machine container 
+                    port
+
+
+Dockerfile
+- It is a text document that contain all the commands a user could call on the CLI to create an image.
+
+--------------------
+FROM node:16-alpine                   // Base Image
+
+WORKDIR /usr/src/app                  // Working directory
+
+COPY package* .
+COPY ./prisma .
+
+RUN npm install
+RUN npx prisma generate
+
+COPY . .                              // it will copy all the things from the server code to my directory (/app)
+
+RUN npm run build
+
+EPOSE 3000
+
+CMD ["node", "dist/index.js"]         // final command that run when trunning hte container
+------------------------
+
+run it 
+dockerbuild -t backend_live .
