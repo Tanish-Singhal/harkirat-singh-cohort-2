@@ -7,8 +7,15 @@ You can just simply store all the services in various top level folder (like fro
 Turborepo (it is not a monorepo framework, under the hood it uses Lerna, npm, etc. which are the monorepo framework)
 
 
+- Build System
+A build system automates the process of transforming source code written by developers into binary code that can be executed by a computer. For ex- complaing a C++ code into .exe file
+
+- Monorepo Framework
+A monorepo framework provides tools and conventions for managing projects that contain multiple packages or applications within a single repository (monorepo).
+
 - Build System Orchestrator
 It doesn't directly perform tasks like transpilation, bundling, minification, or running tests. Instead, TurboRepo allows you to define tasks in your monorepo that call other tools to preform these actions.
+The key feature of TurboRepo is its ability to manage and optimize the execution of these tasks across your monorepo.
 
 
 ADVANTAGES
@@ -20,7 +27,7 @@ ADVANTAGES
 
 
 INSTALLATION
-npx create-turbo@latest
+npx create-turbo@latest    (npm run dev)
 
 Folders
 Things that a end user hit
@@ -30,4 +37,10 @@ Things that a end user hit
 These are the helper package (common folder)
 1. packages/ui - UI packages 
 2. packages/typescript-config - Shareable TS configuration
-3. packages/eslint-config - Shareable ESLine configuration
+3. packages/eslint-config - Shareable ESLint configuration
+
+
+all the components are defined inside "packages/ui". and once you defined a component then you have to export it using package.json.
+
+to avoid the step to manually export it using package.json you can just run the command 
+- npm run generate:component
