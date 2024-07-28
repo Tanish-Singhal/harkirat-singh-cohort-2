@@ -44,3 +44,24 @@ all the components are defined inside "packages/ui". and once you defined a comp
 
 to avoid the step to manually export it using package.json you can just run the command 
 - npm run generate:component
+
+
+When you try to add react-app in global apps then you need to add this in package.json of react-app (under dependency section)
+- "@repo/ui": "*",
+
+
+Adding a node js applications
+- npm init -y
+- npx tsc --init
+
+- tsconfig
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "lib": ["ES2015"],
+    "outDir": "./dist",
+    "rootDir": "./src"
+  }
+}
+
+- npm i express @types/express
