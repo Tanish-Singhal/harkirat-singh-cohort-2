@@ -1,0 +1,13 @@
+Cookie
+It is a small pieces of data sent from a website and stored on the user's computer by the user's web browser while the user is browsing.
+
+1. Session Management
+2. Personalization
+3. Tracking
+4. Security
+
+JWT doesn't work in NextJs
+
+Type of Cookie
+1. Persistent - Stay even if u close the window
+2. Session - Go away after the window closes
