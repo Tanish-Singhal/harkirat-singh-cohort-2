@@ -1,4 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google"
+import Github from "next-auth/providers/github"
+import { signIn } from "next-auth/react";
 
 export const NEXT_AUTH = {
   providers: [
@@ -46,6 +49,14 @@ export const NEXT_AUTH = {
         };
       },
     }),
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || ""
+    }),
+    Github({
+      clientId: process.env.GITHUB_CLIENT_ID || "",
+      clientSecret: process.env.GITHUB_CLIENT_SECRET || ""
+    }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
 
@@ -75,5 +86,9 @@ export const NEXT_AUTH = {
       }
       return session;
     }
+  },
+  // to make he your custom page your default signIn page
+  pages: {
+    signIn: "/signin",
   }
 }
